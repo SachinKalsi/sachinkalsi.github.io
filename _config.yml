@@ -16,9 +16,12 @@ author:
 # Jekyll Settings
 markdown: kramdown
 highlighter: rouge
+
+# Plugins (GitHub Pages compatible)
 plugins:
   - jekyll-feed
   - jekyll-sitemap
+  - jekyll-paginate
 
 # Blog Settings
 permalink: /blog/:title/
