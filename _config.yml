@@ -28,10 +28,6 @@ permalink: /blog/:title/
 paginate: 5
 paginate_path: "/blog/page:num/"
 
-# Include directories
-include:
-  - blog
-
 # Exclude files from processing
 exclude:
   - Gemfile
