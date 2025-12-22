@@ -1,0 +1,32 @@
+[
+    {
+        "link": "https://medium.com/@sachinkalsi/flashattention-understanding-gpu-architecture-part-1-0a8a9a0bb725",
+        "thumbnail": "https://miro.medium.com/v2/resize:fit:1400/format:webp/1*Bx9065zWcSwhZt1I7QX-aA.png?auto=format&fit=crop&q=80&w=1000",
+        "type": "blog",
+        "icon": "fas fa-pen",
+        "title": "FlashAttention: Understanding GPU Architecture-Part 1",
+        "description": "Unlocking the Power of FlashAttention: A Deep Dive into GPU Architecture for Efficient Language Models",
+        "footerIcon": "fab fa-medium",
+        "footerText": "Medium"
+    },
+    {
+        "link": "https://medium.com/@sachinkalsi/flashattention-an-advancement-in-gpu-acceleration-for-training-llms-74528a932c49",
+        "thumbnail": "https://miro.medium.com/v2/resize:fit:1400/format:webp/1*2MFGCkRLZXRxY3t3uS6u_g.png",
+        "type": "blog",
+        "icon": "fas fa-pen",
+        "title": "FlashAttention: GPU Acceleration for Training LLMs-Part 2",
+        "description": "Unlocking the Potential of FlashAttention: Elevating GPU Acceleration in LLM Training",
+        "footerIcon": "fab fa-medium",
+        "footerText": "Medium"
+    },
+    {
+        "link": "https://medium.com/towards-artificial-intelligence/a-deep-dive-into-flashattention-v1-part-3-0f58153f431b",
+        "thumbnail": "https://miro.medium.com/v2/resize:fit:1400/format:webp/1*XN-dP6wSyXAV7ZDSxVFZHg.png",
+        "type": "blog",
+        "icon": "fas fa-pen",
+        "title": "A Deep Dive into FlashAttention V1 -part 3",
+        "description": "Diving Deep into FlashAttention V1: Cracking the Code on Safe Softmax & Online Normalization, exploring Nvidia’s Innovative Algorithm",
+        "footerIcon": "fab fa-medium",
+        "footerText": "Medium"
+    }
+]

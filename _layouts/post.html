@@ -1,0 +1,38 @@
+---
+layout: default
+---
+
+<div class="blog-post">
+    <a href="/blog/" class="back-to-blogs">
+        <i class="fas fa-arrow-left"></i> Return to All Blogs
+    </a>
+
+    <article>
+        <div class="blog-post-header">
+            <h1 class="blog-post-title">{{ page.title }}</h1>
+            <div class="blog-post-meta">
+                <span>
+                    <i class="far fa-calendar"></i> 
+                    {{ page.date | date: "%B %d, %Y" }}
+                </span>
+                {% if page.author %}
+                <span>
+                    <i class="far fa-user"></i> 
+                    {{ page.author }}
+                </span>
+                {% endif %}
+                {% assign words = content | number_of_words %}
+                {% if words < 360 %}
+                    <span><i class="far fa-clock"></i> 1 min read</span>
+                {% else %}
+                    <span><i class="far fa-clock"></i> {{ words | divided_by: 180 }} min read</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="blog-post-content">
+            {{ content }}
+        </div>
+    </article>
+</div>
+

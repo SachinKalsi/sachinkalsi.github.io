@@ -1,0 +1,121 @@
+---
+layout: default
+---
+
+<!-- MAIN CONTENT -->
+<main class="container">
+
+    <!-- YOUTUBE VIDEOS SECTION -->
+    <section class="content-section">
+        <div class="section-header">
+            <h2>YouTube Videos</h2>
+        </div>
+        <div class="grid" id="videos-grid">
+            <!-- Cards will be injected here by JavaScript -->
+        </div>
+
+        <script>
+
+            function renderVideos(videos) {
+                const grid = document.getElementById('videos-grid');
+                grid.innerHTML = '';
+                videos.forEach(item => {
+                    const article = document.createElement('article');
+                    article.className = 'card';
+                    article.innerHTML = `
+                        <a href="${item.link}" target="_blank">
+                            <div class="card-img-wrapper">
+                                <img src="${item.thumbnail}" alt="Thumbnail">
+                                <span class="badge ${item.type}"><i class="${item.icon}"></i> ${item.type}</span>
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-title">${item.title}</h3>
+                                <div class="card-footer">
+                                    <span><i class="${item.footerIcon}"></i> ${item.footerText}</span>
+                                    <span class="read-more">Watch Now &rarr;</span>
+                                </div>
+                            </div>
+                        </a>`;
+                    grid.appendChild(article);
+                });
+            }
+
+            // Load from videos.json, use fallback if it fails
+            fetch('videos.json')
+                .then(response => {
+                    if (!response.ok) throw new Error('Could not load videos.json');
+                    return response.json();
+                })
+                .then(data => {
+                    renderVideos(data);
+                    console.log('✓ Loaded videos from videos.json');
+                })
+                .catch(error => {
+                    console.log('error loading videos.json', error);
+                });
+        </script>
+
+    </section>
+    <div class="more-container">
+        <a href="https://www.youtube.com/@ml-simplified/" class="btn-outline">View All YouTube Videos</a>
+    </div>
+    <!-- BLOG POSTS SECTION -->
+    <section class="content-section">
+        <div class="section-header">
+            <h2>Blog Posts</h2>
+        </div>
+        <div class="grid" id="blogs-grid">
+            <!-- Cards will be injected here by JavaScript -->
+        </div>
+
+        <script>
+
+            function renderBlogs(blogs) {
+                const grid = document.getElementById('blogs-grid');
+                grid.innerHTML = '';
+                blogs.forEach(item => {
+                    const article = document.createElement('article');
+                    article.className = 'card';
+                    article.innerHTML = `
+                        <a href="${item.link}" target="_blank">
+                            <!-- <div class="card-img-wrapper">
+                                <img src="${item.thumbnail}" alt="Thumbnail">
+                                <span class="badge ${item.type}"><i class="${item.icon}"></i> Article</span>
+                            </div> -->
+                            <div class="card-body">
+                                <h3 class="card-title">${item.title}</h3>
+                                <p class="card-desc">${item.description}</p>
+                                <div class="card-footer">
+                                    <span><i class="${item.footerIcon}"></i> ${item.footerText}</span>
+                                    <span class="read-more">Read &rarr;</span>
+                                </div>
+                            </div>
+                        </a>`;
+                    grid.appendChild(article);
+                });
+            }
+
+            // Load from blogs.json, use fallback if it fails
+            fetch('blogs.json')
+                .then(response => {
+                    if (!response.ok) throw new Error('Could not load blogs.json');
+                    return response.json();
+                })
+                .then(data => {
+                    renderBlogs(data);
+                    console.log('✓ Loaded blogs from blogs.json');
+                })
+                .catch(error => {
+                    console.log('error loading blogs.json', error);
+                });
+        </script>
+        <!-- <div class="more-container">
+            <a href="https://medium.com/@sachinkalsi" class="btn-outline">View All Blog Posts</a>
+        </div> -->
+        <div class="more-container">
+            <a href="/blog/" class="btn-outline"><i class="fas fa-blog"></i> View All Blog Posts</a>
+        </div>
+    </section>
+
+
+</main>

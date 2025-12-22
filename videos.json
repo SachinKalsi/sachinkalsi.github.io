@@ -1,0 +1,29 @@
+[
+    {
+        "link": "https://youtu.be/rCJfyw7XBx8",
+        "thumbnail": "https://i9.ytimg.com/vi/rCJfyw7XBx8/mqdefault.jpg?v=65fed322&sqp=COj2pcoG&rs=AOn4CLAZNNR0GonmjWiDUV0JGAv0uxAKhQ",
+        "type": "video",
+        "icon": "fab fa-youtube",
+        "title": "Multi Query Attention & Group Query Attention",
+        "footerIcon": "fab fa-youtube",
+        "footerText": "YouTube"
+    },
+    {
+        "link": "https://youtu.be/z07GStMex4w?list=PLfSv7CK7EjD2fC9S6MAKRNDgTSCYgdGgz",
+        "thumbnail": "https://i.ytimg.com/vi/z07GStMex4w/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLAsabjUmqsxQC-VqnesKtPebXcXcA",
+        "type": "video",
+        "icon": "fab fa-youtube",
+        "title": "KV Cache Explained",
+        "footerIcon": "fab fa-youtube",
+        "footerText": "YouTube"
+    },
+    {
+        "link": "https://youtu.be/rQa0JPBG1Ps?list=PLfSv7CK7EjD2fC9S6MAKRNDgTSCYgdGgz",
+        "thumbnail": "https://i.ytimg.com/vi/rQa0JPBG1Ps/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLAzUEXxET3rX34mtV2fAphuj4MMzQ",
+        "type": "video",
+        "icon": "fab fa-youtube",
+        "title": "PagedAttention Explained",
+        "footerIcon": "fab fa-youtube",
+        "footerText": "YouTube"
+    }
+]

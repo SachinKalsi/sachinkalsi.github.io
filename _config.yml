@@ -1,0 +1,36 @@
+# Site Settings
+title: "Sachin Kalsi | Data Science Architect (NLP)"
+description: "Specializing in Large Language Models, Semantic Search, and Generative AI."
+url: "" # Your site URL (leave empty for local development)
+baseurl: "" # Subpath of your site
+
+# Author Information
+author:
+  name: "Sachin Kalsi"
+  email: "sachinkalsi15@gmail.com"
+  linkedin: "https://www.linkedin.com/in/sachinkalsi/"
+  github: "https://github.com/sachinkalsi"
+  medium: "https://medium.com/@sachinkalsi"
+  youtube: "https://www.youtube.com/@ml-simplified/"
+
+# Jekyll Settings
+markdown: kramdown
+highlighter: rouge
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+# Blog Settings
+permalink: /blog/:title/
+paginate: 5
+paginate_path: "/blog/page:num/"
+
+# Exclude files from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .git
+  - .gitignore
+
