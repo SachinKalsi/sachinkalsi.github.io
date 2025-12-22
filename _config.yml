@@ -3,6 +3,7 @@ title: "Sachin Kalsi | Data Science Architect (NLP)"
 description: "Specializing in Large Language Models, Semantic Search, and Generative AI."
 url: "https://sachinkalsi.github.io" # Your site URL
 baseurl: "" # Subpath of your site
+timezone: America/New_York
 
 # Author Information
 author:
