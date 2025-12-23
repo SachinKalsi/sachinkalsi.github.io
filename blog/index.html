@@ -1,0 +1,105 @@
+---
+layout: default
+title: Blog
+---
+
+<main class="container">
+    <!-- JEKYLL/MARKDOWN BLOGS SECTION -->
+    <section class="content-section">
+        <div class="section-header">
+            <h2>Blog Posts</h2>
+        </div>
+        
+        <div class="grid" id="jekyll-blogs-grid">
+            {% for post in site.posts %}
+            <article class="card">
+                <a href="{{ post.url }}">
+                    <div class="card-body">
+                        <span class="badge blog blog-badge-inline"><i class="fas fa-blog"></i> Article</span>
+                        <h3 class="card-title">{{ post.title }}</h3>
+                        {% if post.excerpt %}
+                        <p class="card-desc">{{ post.excerpt | strip_html | truncatewords: 20 }}</p>
+                        {% endif %}
+                        <div class="card-footer">
+                            <span><i class="far fa-calendar"></i> {{ post.date | date: "%B %d, %Y" }}</span>
+                            <span class="read-more">Read &rarr;</span>
+                        </div>
+                    </div>
+                </a>
+            </article>
+            {% endfor %}
+        </div>
+        
+        {% if site.posts.size == 0 %}
+        <div style="text-align: center; padding: 60px 20px; color: var(--text-muted);">
+            <i class="fas fa-blog" style="font-size: 4rem; margin-bottom: 20px; opacity: 0.3;"></i>
+            <p style="font-size: 1.2rem;">No blog posts yet. Check back soon!</p>
+        </div>
+        {% endif %}
+    </section>
+
+    <!-- MEDIUM BLOGS SECTION -->
+    <section class="content-section">
+        <div class="section-header">
+            <h2>Medium Articles</h2>
+        </div>
+        
+        <div class="grid" id="medium-blogs-grid">
+            <!-- Medium blogs will be loaded here via JavaScript -->
+        </div>
+
+        <div id="medium-blogs-empty" style="text-align: center; padding: 60px 20px; color: var(--text-muted); display: none;">
+            <i class="fab fa-medium" style="font-size: 4rem; margin-bottom: 20px; opacity: 0.3;"></i>
+            <p style="font-size: 1.2rem;">No Medium articles available.</p>
+        </div>
+    </section>
+</main>
+
+<script>
+    function renderMediumBlogs(blogs) {
+        const grid = document.getElementById('medium-blogs-grid');
+        const emptyDiv = document.getElementById('medium-blogs-empty');
+        
+        if (!blogs || blogs.length === 0) {
+            grid.style.display = 'none';
+            emptyDiv.style.display = 'block';
+            return;
+        }
+
+        grid.innerHTML = '';
+        blogs.forEach(item => {
+            const article = document.createElement('article');
+            article.className = 'card';
+            article.innerHTML = `
+                <a href="${item.link}" target="_blank" rel="noopener noreferrer">
+                    <div class="card-body">
+                        <span class="badge blog blog-badge-inline"><i class="fab fa-medium"></i> Medium</span>
+                        <h3 class="card-title">${item.title}</h3>
+                        ${item.description ? `<p class="card-desc">${item.description}</p>` : ''}
+                        <div class="card-footer">
+                            <span><i class="fab fa-medium"></i> Medium</span>
+                            <span class="read-more">Read on Medium &rarr;</span>
+                        </div>
+                    </div>
+                </a>`;
+            grid.appendChild(article);
+        });
+    }
+
+    // Load Medium blogs from medium-blogs.json
+    fetch('/medium-blogs.json')
+        .then(response => {
+            if (!response.ok) throw new Error('Could not load medium-blogs.json');
+            return response.json();
+        })
+        .then(data => {
+            renderMediumBlogs(data);
+            console.log('✓ Loaded Medium blogs from medium-blogs.json');
+        })
+        .catch(error => {
+            console.log('Error loading medium-blogs.json:', error);
+            document.getElementById('medium-blogs-grid').style.display = 'none';
+            document.getElementById('medium-blogs-empty').style.display = 'block';
+        });
+</script>
+
