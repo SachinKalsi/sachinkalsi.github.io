@@ -4,6 +4,8 @@ title: "Why Do We Use Negative Infinity for Masking in Attention?"
 date: 2025-12-23
 author: "Sachin Kalsi"
 ---
+Why Setting Scores to `0` Doesn't Work?
+
 ## Introduction
 
 In decoder-only models (like GPT), each token should only "see" previous tokens, not future ones. This is called **causal attention**. To enforce this, we use **masking**. But here's the trick: we don't mask future tokens with `0`—we use **negative infinity** ($-\infty$).
