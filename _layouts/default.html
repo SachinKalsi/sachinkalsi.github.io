@@ -17,22 +17,23 @@
     <style>
         /* --- 1. VARIABLES & RESET --- */
         :root {
-            --primary: #3b82f6;
-            /* Vibrant AI Blue */
-            --primary-dark: #2563eb;
-            --accent-purple: #8b5cf6;
-            --accent-cyan: #06b6d4;
-            --bg-body: #f1f5f9;
-            /* Soft grey-blue */
+            --primary: #1a1a1a;
+            /* Deep Black */
+            --primary-dark: #000000;
+            --accent-gray: #4a4a4a;
+            --accent-light: #8a8a8a;
+            --bg-body: #ffffff;
+            /* Pure White */
             --bg-card: #ffffff;
-            --text-main: #0f172a;
-            /* Deep Navy */
-            --text-muted: #64748b;
-            --text-light: #cbd5e1;
-            --border: #e2e8f0;
-            --radius: 16px;
-            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+            --bg-section: #fafafa;
+            --text-main: #1a1a1a;
+            /* Deep Black */
+            --text-muted: #6b6b6b;
+            --text-light: #9a9a9a;
+            --border: #e5e5e5;
+            --radius: 8px;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
         }
 
         * {
@@ -90,30 +91,18 @@
             bottom: 0;
             left: 0;
             width: 60px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--accent-purple));
-            border-radius: 2px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 1px;
         }
 
         /* --- 3. HERO SECTION --- */
         header {
-            background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%);
+            background: var(--bg-body);
+            border-bottom: 1px solid var(--border);
             padding: 100px 0 80px;
             text-align: center;
             position: relative;
-            overflow: hidden;
-        }
-
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%);
-            pointer-events: none;
         }
 
         .container {
@@ -123,13 +112,10 @@
 
         .hero-name {
             font-size: 3.5rem;
-            font-weight: 800;
-            letter-spacing: -0.05rem;
+            font-weight: 700;
+            letter-spacing: -0.03rem;
             margin-bottom: 15px;
-            background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--primary);
             animation: fadeInUp 0.6s ease-out;
         }
 
@@ -146,22 +132,23 @@
         }
 
         .hero-role {
-            font-size: 1.4rem;
-            background: linear-gradient(90deg, var(--primary), var(--accent-cyan));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            font-weight: 400;
             margin-bottom: 30px;
+            letter-spacing: 0.02rem;
+            text-transform: uppercase;
+            font-size: 0.875rem;
             animation: fadeInUp 0.6s ease-out 0.1s backwards;
         }
 
         .hero-bio {
             max-width: 650px;
             margin: 0 auto 40px;
-            color: var(--text-light);
-            font-size: 1.15rem;
+            color: var(--text-muted);
+            font-size: 1.1rem;
             line-height: 1.7;
+            font-weight: 400;
             animation: fadeInUp 0.6s ease-out 0.2s backwards;
         }
 
@@ -174,47 +161,58 @@
         }
 
         .social-links a {
-            font-size: 1.5rem;
-            color: var(--text-light);
-            width: 50px;
-            height: 50px;
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            width: 44px;
+            height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            background: transparent;
+            border: 1px solid var(--border);
             transition: all 0.3s ease;
         }
 
         .social-links a:hover {
-            background: rgba(59, 130, 246, 0.2);
+            background: var(--primary);
             color: white;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+            border-color: var(--primary);
+            transform: translateY(-2px);
         }
 
         .cta-btn {
             display: inline-block;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent-purple) 100%);
+            background: var(--primary);
             color: white;
-            padding: 14px 32px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1rem;
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+            padding: 12px 28px;
+            border-radius: 4px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            border: 1px solid var(--primary);
+            box-shadow: var(--shadow);
             animation: fadeInUp 0.6s ease-out 0.4s backwards;
             transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05rem;
+            font-size: 0.8125rem;
         }
 
         .cta-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.5);
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
         }
 
         /* --- 4. CONTENT GRID --- */
         .content-section {
-            padding: 60px 0;
+            padding: 80px 0;
+            background: var(--bg-section);
+        }
+
+        .content-section:nth-child(even) {
+            background: var(--bg-body);
         }
 
         .grid {
@@ -229,14 +227,14 @@
             border-radius: var(--radius);
             border: 1px solid var(--border);
             overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s ease;
             display: flex;
             flex-direction: column;
             height: 100%;
         }
 
         .card:hover {
-            transform: translateY(-8px) scale(1.01);
+            transform: translateY(-2px);
             box-shadow: var(--shadow-lg);
             border-color: var(--primary);
         }
@@ -280,20 +278,19 @@
         }
 
         .badge.video {
-            color: #dc2626;
+            color: var(--text-muted);
+            background: var(--bg-section);
         }
 
-        /* Red for Video */
         .badge.blog {
-            color: #059669;
+            color: var(--text-muted);
+            background: var(--bg-section);
         }
 
-        /* Green for Blog */
         .badge.code {
-            color: #1e293b;
+            color: var(--text-muted);
+            background: var(--bg-section);
         }
-
-        /* Dark for GitHub */
 
         .card-body {
             padding: 24px;
@@ -329,8 +326,10 @@
 
         .read-more {
             color: var(--primary);
-            font-weight: 600;
-            font-size: 0.9rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05rem;
         }
 
         /* --- 5. FOOTER & BUTTONS --- */
@@ -340,16 +339,22 @@
         }
 
         .btn-outline {
-            border: 2px solid var(--border);
-            padding: 10px 25px;
-            border-radius: 50px;
-            font-weight: 600;
+            border: 1px solid var(--border);
+            padding: 10px 24px;
+            border-radius: 4px;
+            font-weight: 500;
             color: var(--text-muted);
+            background: transparent;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05rem;
+            font-size: 0.8125rem;
         }
 
         .btn-outline:hover {
-            border-color: var(--text-main);
-            color: var(--text-main);
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--bg-section);
         }
 
         footer {
