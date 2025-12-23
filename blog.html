@@ -16,7 +16,7 @@ permalink: /blog/
             <article class="card">
                 <a href="{{ post.url }}">
                     <div class="card-body">
-                        <span class="badge blog blog-badge-inline"><i class="fas fa-blog"></i> Article</span>
+                        <span class="badge blog blog-badge-inline">Article</span>
                         <h3 class="card-title">{{ post.title }}</h3>
                         {% if post.excerpt %}
                         <p class="card-desc">{{ post.excerpt | strip_html | truncatewords: 20 }}</p>
@@ -74,11 +74,11 @@ permalink: /blog/
             article.innerHTML = `
                 <a href="${item.link}" target="_blank" rel="noopener noreferrer">
                     <div class="card-body">
-                        <span class="badge blog blog-badge-inline"><i class="fab fa-medium"></i> Medium</span>
+                        <span class="badge blog blog-badge-inline">Medium</span>
                         <h3 class="card-title">${item.title}</h3>
                         ${item.description ? `<p class="card-desc">${item.description}</p>` : ''}
                         <div class="card-footer">
-                            <span><i class="fab fa-medium"></i> Medium</span>
+                            <span>Medium</span>
                             <span class="read-more">Read on Medium &rarr;</span>
                         </div>
                     </div>
