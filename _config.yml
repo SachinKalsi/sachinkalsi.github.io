@@ -17,6 +17,10 @@ author:
 # Jekyll Settings
 markdown: kramdown
 highlighter: rouge
+kramdown:
+  math_engine: mathjax
+  math_engine_opts:
+    preview: AsciiMath
 
 # Plugins (GitHub Pages compatible)
 plugins:
