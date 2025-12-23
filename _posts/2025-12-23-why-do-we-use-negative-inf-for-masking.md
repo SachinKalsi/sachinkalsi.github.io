@@ -6,31 +6,41 @@ author: "Sachin Kalsi"
 ---
 ## Introduction
 
-In Causal Attention (i.e, decoder-only models), a token can not look into the future tokens and to enable this we use `masking`. We don't mask future tokens by filling with zero but filling with negative infinity ($-\infty$).
+In decoder-only models (like GPT), each token should only "see" previous tokens, not future ones. This is called **causal attention**. To enforce this, we use **masking**. But here's the trick: we don't mask future tokens with `0`—we use **negative infinity** ($-\infty$).
 
 ---
 
-### 1. Causal Masking
+## 1. What is Causal Masking?
 
-In a sequence of tokens, we want the attention mechanism for the $i$-th token to only consider tokens from $0$ to $i$. Generally masking will be applied to attention scores. And to do this, we create a mask using `torch.tril` . And in this representation future tokens are represented as `0` (False) & past/previous tokens as `1` (True).
+When processing a sequence, the $i$-th token should only attend to tokens from position $0$ to $i$. We apply masking to the attention scores before softmax.
+
+We create a mask using `torch.tril` (lower triangular matrix):
+- Past/current tokens → `1` (True)
+- Future tokens → `0` (False)
 
 ---
 
-### 2. Why "0" Fails
+## 2. Why Setting Scores to `0` Doesn't Work
 
-Let’s look at the Softmax formula:
+Here's the softmax formula:
 
 $$\text{Softmax}(x_i) = \frac{e^{x_i}}{\sum_{j} e^{x_j}}$$
 
-If you set an attention score to $0$, the numerator becomes $e^0 = 1$ & the future "ignored" token still gets a non-zero probability!
+If you set a future token's score to $0$:
+- The numerator becomes $e^0 = 1$
+- The token still gets a **non-zero probability**!
+
+This defeats the purpose of masking.
 
 ---
 
-### 3. The Solution: The Power of $-\infty$
+## 3. The Solution: Use $-\infty$
 
-Replace the scores of future tokens with $-\infty$ instead of $0$ since $e^{-\infty}$ becomes $0$ and the softmax output for those future tokens becomes exactly $0$.
+Replace future token scores with $-\infty$ instead of $0$:
+- $e^{-\infty} = 0$
+- Softmax output for future tokens becomes **exactly** $0$
 
-**Note:** in actual FP16 training, we often use -65504 instead of a literal inf to avoid numerical instability. `min_value = torch.finfo(dtype).min` would help
+**Practical Note:** In FP16 training, we use `-65504` (the minimum float16 value) instead of literal infinity to avoid numerical issues. Use `torch.finfo(dtype).min` to get this value.
 
 ---
 
