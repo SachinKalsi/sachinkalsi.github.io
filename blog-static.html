@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Sachin Kalsi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; margin: 0; padding: 40px; background: #f1f5f9; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        h1 { color: #0f172a; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #3b82f6; text-decoration: none; }
+        .back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">← Back to Home</a>
+        <h1>Blog Posts</h1>
+        <div id="jekyll-blogs"></div>
+        <h2>Medium Articles</h2>
+        <div id="medium-blogs"></div>
+    </div>
+    <script>
+        // This will be populated by the actual blog.html content
+        document.getElementById('jekyll-blogs').innerHTML = '<p>Loading blog posts...</p>';
+        document.getElementById('medium-blogs').innerHTML = '<p>Loading Medium articles...</p>';
+    </script>
+</body>
+</html>
+
