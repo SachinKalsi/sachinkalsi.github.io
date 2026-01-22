@@ -5,6 +5,11 @@ url: "https://sachinkalsi.github.io" # Your site URL
 baseurl: "" # Subpath of your site
 timezone: America/New_York
 
+# Google Analytics (GA4)
+# Get your Measurement ID from: https://analytics.google.com/
+# Format: G-XXXXXXXXXX
+google_analytics: "G-SPBSTYD46G" # Google Analytics Measurement ID
+
 # Author Information
 author:
   name: "Sachin Kalsi"
@@ -17,10 +22,6 @@ author:
 # Jekyll Settings
 markdown: kramdown
 highlighter: rouge
-kramdown:
-  math_engine: mathjax
-  math_engine_opts:
-    preview: AsciiMath
 
 # Plugins (GitHub Pages compatible)
 plugins:

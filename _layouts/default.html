@@ -70,6 +70,20 @@
     <!-- RSS Feed -->
     <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.url }}{{ site.baseurl }}/feed.xml">
 
+    <!-- Google Analytics (GA4) -->
+    {% if site.google_analytics %}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '{{ site.google_analytics }}', {
+            'page_title': '{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}',
+            'page_location': '{{ site.url }}{{ site.baseurl }}{{ page.url }}'
+        });
+    </script>
+    {% endif %}
+
     <!-- Google Fonts: Inter for a clean, tech look -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
