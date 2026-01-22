@@ -25,20 +25,6 @@ permalink: /blog/
                             <span><i class="far fa-calendar"></i> {{ post.date | date: "%B %d, %Y" }}</span>
                             <span class="read-more">Read &rarr;</span>
                         </div>
-                        {% if post.tags or post.categories %}
-                        <div class="card-tags">
-                            {% if post.categories %}
-                            {% for category in post.categories limit: 2 %}
-                            <span class="card-tag category">{{ category }}</span>
-                            {% endfor %}
-                            {% endif %}
-                            {% if post.tags %}
-                            {% for tag in post.tags limit: 3 %}
-                            <span class="card-tag">{{ tag }}</span>
-                            {% endfor %}
-                            {% endif %}
-                        </div>
-                        {% endif %}
                     </div>
                 </a>
             </article>

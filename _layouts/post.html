@@ -19,7 +19,7 @@ layout: default
                 <span itemprop="author" itemscope itemtype="https://schema.org/Person">
                     <meta itemprop="name" content="{{ page.author }}">
                     <i class="far fa-user"></i> 
-                    {{ page.author }}
+                    <a href="/" class="author-link">{{ page.author }}</a>
                 </span>
                 {% endif %}
                 {% assign words = content | number_of_words %}
@@ -29,51 +29,11 @@ layout: default
                     <span><i class="far fa-clock"></i> {{ words | divided_by: 180 }} min read</span>
                 {% endif %}
             </div>
-            
-            {% if page.tags or page.categories %}
-            <div class="blog-post-tags">
-                {% if page.categories %}
-                <div class="post-categories">
-                    {% for category in page.categories %}
-                    <span class="category-badge">{{ category }}</span>
-                    {% endfor %}
-                </div>
-                {% endif %}
-                {% if page.tags %}
-                <div class="post-tags">
-                    {% for tag in page.tags %}
-                    <span class="tag-badge">#{{ tag }}</span>
-                    {% endfor %}
-                </div>
-                {% endif %}
-            </div>
-            {% endif %}
         </div>
 
         <div class="blog-post-content" itemprop="articleBody">
             {{ content }}
         </div>
-        
-        {% if page.tags or page.categories %}
-        <div class="blog-post-footer-tags" itemprop="keywords">
-            {% if page.categories %}
-            <div class="footer-tags-section">
-                <strong><i class="fas fa-folder"></i> Categories:</strong>
-                {% for category in page.categories %}
-                <span class="footer-tag">{{ category }}</span>
-                {% endfor %}
-            </div>
-            {% endif %}
-            {% if page.tags %}
-            <div class="footer-tags-section">
-                <strong><i class="fas fa-tags"></i> Tags:</strong>
-                {% for tag in page.tags %}
-                <span class="footer-tag">{{ tag }}</span>
-                {% endfor %}
-            </div>
-            {% endif %}
-        </div>
-        {% endif %}
         
         {% if page.description %}
         <meta itemprop="description" content="{{ page.description }}">
