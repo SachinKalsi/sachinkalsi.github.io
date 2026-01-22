@@ -3,6 +3,15 @@ layout: post
 title: "A Simple Guide to Unicode and \\xa0"
 date: 2025-12-22
 author: "Sachin Kalsi"
+description: "Learn about Unicode normalization, non-breaking spaces (\\xa0), and how to handle text encoding issues in Python. Understand NFC, NFD, NFKD, and NFKC normalization forms for better text processing."
+tags:
+  - Python
+  - Unicode
+  - Text Processing
+  - Data Cleaning
+categories:
+  - Tutorial
+  - NLP
 ---
 ## Why Does My Text Look Weird?
 

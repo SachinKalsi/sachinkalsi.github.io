@@ -7,39 +7,69 @@
     
     <!-- Primary Meta Tags -->
     <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
-    <meta name="title" content="{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}">
-    <meta name="description" content="{% if page.description %}{{ page.description }}{% elsif page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
-    <meta name="keywords" content="{% if page.keywords %}{{ page.keywords }}{% else %}Data Science, NLP, Machine Learning, LLM, Large Language Models, AI, Deep Learning, Natural Language Processing, Generative AI, Semantic Search{% endif %}">
+    {% if page.description %}
+    <meta name="description" content="{{ page.description }}">
+    {% elsif page.excerpt %}
+    <meta name="description" content="{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}">
+    {% else %}
+    <meta name="description" content="{{ site.description }}">
+    {% endif %}
     <meta name="author" content="{{ site.author.name }}">
     <meta name="robots" content="index, follow">
     <meta name="language" content="English">
-    <meta name="revisit-after" content="7 days">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="{{ site.url }}{{ page.url }}">
+    <link rel="canonical" href="{{ site.url }}{{ site.baseurl }}{{ page.url }}">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
-    <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+    <meta property="og:url" content="{{ site.url }}{{ site.baseurl }}{{ page.url }}">
     <meta property="og:title" content="{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}">
-    <meta property="og:description" content="{% if page.description %}{{ page.description }}{% elsif page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
-    <meta property="og:image" content="{% if page.image %}{{ site.url }}{{ page.image }}{% else %}{{ site.url }}/assets/images/og-image.jpg{% endif %}">
+    {% if page.description %}
+    <meta property="og:description" content="{{ page.description }}">
+    {% elsif page.excerpt %}
+    <meta property="og:description" content="{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}">
+    {% else %}
+    <meta property="og:description" content="{{ site.description }}">
+    {% endif %}
+    {% if page.image %}
+    <meta property="og:image" content="{{ site.url }}{{ site.baseurl }}{{ page.image }}">
+    {% else %}
+    <meta property="og:image" content="{{ site.url }}{{ site.baseurl }}/assets/images/og-image.jpg">
+    {% endif %}
     <meta property="og:site_name" content="{{ site.title }}">
     <meta property="og:locale" content="en_US">
+    {% if page.layout == 'post' %}
+    <meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}">
+    <meta property="article:author" content="{{ site.author.name }}">
+    {% endif %}
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="{{ site.url }}{{ page.url }}">
+    <meta name="twitter:url" content="{{ site.url }}{{ site.baseurl }}{{ page.url }}">
     <meta name="twitter:title" content="{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}">
-    <meta name="twitter:description" content="{% if page.description %}{{ page.description }}{% elsif page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
-    <meta name="twitter:image" content="{% if page.image %}{{ site.url }}{{ page.image }}{% else %}{{ site.url }}/assets/images/og-image.jpg{% endif %}">
+    {% if page.description %}
+    <meta name="twitter:description" content="{{ page.description }}">
+    {% elsif page.excerpt %}
+    <meta name="twitter:description" content="{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}">
+    {% else %}
+    <meta name="twitter:description" content="{{ site.description }}">
+    {% endif %}
+    {% if page.image %}
+    <meta name="twitter:image" content="{{ site.url }}{{ site.baseurl }}{{ page.image }}">
+    {% else %}
+    <meta name="twitter:image" content="{{ site.url }}{{ site.baseurl }}/assets/images/og-image.jpg">
+    {% endif %}
     <meta name="twitter:creator" content="@sachinkalsi">
     <meta name="twitter:site" content="@sachinkalsi">
     
     <!-- Additional SEO -->
-    <meta name="theme-color" content="#000000">
+    <meta name="theme-color" content="#3b82f6">
     <link rel="author" href="{{ site.author.linkedin }}">
     
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.url }}{{ site.baseurl }}/feed.xml">
+
     <!-- Google Fonts: Inter for a clean, tech look -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -48,41 +78,25 @@
     <!-- FontAwesome for Social Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- MathJax for rendering mathematical formulas -->
-    <script>
-      MathJax = {
-        tex: {
-          inlineMath: [['$', '$'], ['\\(', '\\)']],
-          displayMath: [['$$', '$$'], ['\\[', '\\]']],
-          processEscapes: true,
-          processEnvironments: true
-        },
-        options: {
-          skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
-        }
-      };
-    </script>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
     <style>
         /* --- 1. VARIABLES & RESET --- */
         :root {
-            --primary: #000000;
-            --primary-dark: #000000;
-            --accent-gray: #2a2a2a;
-            --accent-light: #6a6a6a;
-            --bg-body: #ffffff;
+            --primary: #3b82f6;
+            /* Vibrant AI Blue */
+            --primary-dark: #2563eb;
+            --accent-purple: #8b5cf6;
+            --accent-cyan: #06b6d4;
+            --bg-body: #f1f5f9;
+            /* Soft grey-blue */
             --bg-card: #ffffff;
-            --bg-section: #f8f8f8;
-            --text-main: #1a1a1a;
-            --text-muted: #4a4a4a;
-            --text-light: #8a8a8a;
-            --border: #e0e0e0;
-            --radius: 12px;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
-            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08);
-            --shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.15);
+            --text-main: #0f172a;
+            /* Deep Navy */
+            --text-muted: #64748b;
+            --text-light: #cbd5e1;
+            --border: #e2e8f0;
+            --radius: 16px;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
         }
 
         * {
@@ -127,12 +141,11 @@
         }
 
         .section-header h2 {
-            font-size: 2.25rem;
-            font-weight: 600;
+            font-size: 2rem;
+            font-weight: 700;
             color: var(--text-main);
             position: relative;
-            padding-bottom: 16px;
-            letter-spacing: -0.02em;
+            padding-bottom: 12px;
         }
 
         .section-header h2::after {
@@ -140,19 +153,31 @@
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 80px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary) 0%, transparent 100%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent-purple));
             border-radius: 2px;
         }
 
         /* --- 3. HERO SECTION --- */
         header {
-            background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
-            border-bottom: 1px solid var(--border);
-            padding: 120px 0 100px;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%);
+            padding: 100px 0 80px;
             text-align: center;
             position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%);
+            pointer-events: none;
         }
 
         .container {
@@ -161,13 +186,15 @@
         }
 
         .hero-name {
-            font-size: 4rem;
-            font-weight: 700;
-            letter-spacing: -0.04rem;
-            margin-bottom: 20px;
-            color: var(--primary);
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -0.05rem;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             animation: fadeInUp 0.6s ease-out;
-            line-height: 1.1;
         }
 
         @keyframes fadeInUp {
@@ -183,22 +210,22 @@
         }
 
         .hero-role {
-            font-size: 0.9375rem;
-            color: var(--text-muted);
-            font-weight: 500;
-            margin-bottom: 32px;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
+            font-size: 1.4rem;
+            background: linear-gradient(90deg, var(--primary), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            margin-bottom: 30px;
             animation: fadeInUp 0.6s ease-out 0.1s backwards;
         }
 
         .hero-bio {
-            max-width: 680px;
-            margin: 0 auto 48px;
-            color: var(--text-muted);
-            font-size: 1.125rem;
-            line-height: 1.75;
-            font-weight: 400;
+            max-width: 650px;
+            margin: 0 auto 40px;
+            color: var(--text-light);
+            font-size: 1.15rem;
+            line-height: 1.7;
             animation: fadeInUp 0.6s ease-out 0.2s backwards;
         }
 
@@ -211,58 +238,47 @@
         }
 
         .social-links a {
-            font-size: 1.125rem;
-            color: var(--text-muted);
-            width: 48px;
-            height: 48px;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            width: 50px;
+            height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            background: var(--bg-card);
-            border: 1.5px solid var(--border);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
         }
 
         .social-links a:hover {
-            background: var(--primary);
+            background: rgba(59, 130, 246, 0.2);
             color: white;
-            border-color: var(--primary);
-            transform: translateY(-3px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
         }
 
         .cta-btn {
             display: inline-block;
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent-purple) 100%);
             color: white;
             padding: 14px 32px;
-            border-radius: 6px;
+            border-radius: 50px;
             font-weight: 600;
-            font-size: 0.9375rem;
-            border: 2px solid var(--primary);
-            box-shadow: var(--shadow);
+            font-size: 1rem;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
             animation: fadeInUp 0.6s ease-out 0.4s backwards;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            letter-spacing: 0.02em;
+            transition: all 0.3s ease;
         }
 
         .cta-btn:hover {
-            background: var(--primary-dark);
-            border-color: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-xl);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.5);
         }
 
         /* --- 4. CONTENT GRID --- */
         .content-section {
-            padding: 80px 0;
-            background: var(--bg-body);
-        }
-
-        .content-section:nth-child(even) {
-            background: var(--bg-section);
+            padding: 60px 0;
         }
 
         .grid {
@@ -274,20 +290,19 @@
         /* Card Design */
         .card {
             background: var(--bg-card);
-            border-radius: 12px;
+            border-radius: var(--radius);
             border: 1px solid var(--border);
             overflow: hidden;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
             height: 100%;
-            box-shadow: var(--shadow);
         }
 
         .card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-xl);
-            border-color: var(--accent-gray);
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
         }
 
         .card-img-wrapper {
@@ -306,28 +321,10 @@
         /* Badge styling for cards without images */
         .blog-badge-inline {
             position: static !important;
-            margin-bottom: 16px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+            margin-bottom: 12px;
+            display: inline-block;
             top: auto;
             right: auto;
-            background: transparent;
-            padding: 0;
-            border-radius: 0;
-            box-shadow: none;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: #059669;
-        }
-
-        .blog-badge-inline::before {
-            content: '••';
-            font-size: 0.5rem;
-            letter-spacing: 0.1em;
-            color: #059669;
         }
 
         /* Category Badge */
@@ -348,18 +345,19 @@
 
         .badge.video {
             color: #dc2626;
-            background: rgba(255, 255, 255, 0.9);
         }
 
+        /* Red for Video */
         .badge.blog {
             color: #059669;
-            background: rgba(255, 255, 255, 0.9);
         }
 
+        /* Green for Blog */
         .badge.code {
             color: #1e293b;
-            background: rgba(255, 255, 255, 0.9);
         }
+
+        /* Dark for GitHub */
 
         .card-body {
             padding: 24px;
@@ -369,55 +367,60 @@
         }
 
         .card-title {
-            font-size: 1.125rem;
+            font-size: 1.1rem;
             font-weight: 700;
             margin-bottom: 12px;
-            line-height: 1.5;
-            color: var(--primary);
+            line-height: 1.4;
         }
 
         .card-desc {
-            font-size: 0.9375rem;
-            color: var(--text-main);
+            font-size: 0.95rem;
+            color: var(--text-muted);
             margin-bottom: 20px;
             flex-grow: 1;
-            line-height: 1.6;
-            font-weight: 400;
+            /* Pushes footer down */
         }
 
         .card-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.875rem;
-            color: var(--text-main);
-            border-top: 1px solid var(--border);
-            padding-top: 16px;
-            margin-top: auto;
-        }
-
-        .card-footer span:first-child {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .card-footer span:first-child::before {
-            content: '••';
-            font-size: 0.5rem;
-            letter-spacing: 0.1em;
-            color: var(--text-main);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--bg-body);
+            padding-top: 15px;
         }
 
         .read-more {
-            color: var(--text-main);
-            font-weight: 500;
-            font-size: 0.875rem;
-            transition: all 0.2s ease;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.9rem;
         }
 
-        .card:hover .read-more {
-            color: var(--primary);
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--bg-body);
+        }
+
+        .card-tag {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: var(--bg-body);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+        }
+
+        .card-tag.category {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent-purple) 100%);
+            color: white;
+            border: none;
         }
 
         /* --- 5. FOOTER & BUTTONS --- */
@@ -427,34 +430,25 @@
         }
 
         .btn-outline {
-            border: 1.5px solid var(--border);
-            padding: 12px 28px;
-            border-radius: 6px;
+            border: 2px solid var(--border);
+            padding: 10px 25px;
+            border-radius: 50px;
             font-weight: 600;
-            color: var(--text-main);
-            background: var(--bg-card);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            letter-spacing: 0.02em;
-            font-size: 0.9375rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+            color: var(--text-muted);
         }
 
         .btn-outline:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            background: var(--bg-card);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
+            border-color: var(--text-main);
+            color: var(--text-main);
         }
 
         footer {
             text-align: center;
-            padding: 60px 0;
+            padding: 40px 0;
             color: var(--text-muted);
-            font-size: 0.875rem;
-            margin-top: 80px;
+            font-size: 0.9rem;
+            margin-top: 40px;
             border-top: 1px solid var(--border);
-            background: var(--bg-section);
         }
 
         /* Blog Post Styles */
@@ -503,6 +497,91 @@
 
         .blog-post-meta i {
             margin-right: 5px;
+        }
+
+        /* Tags and Categories */
+        .blog-post-tags {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .post-categories,
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .category-badge,
+        .tag-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .category-badge {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent-purple) 100%);
+            color: white;
+        }
+
+        .tag-badge {
+            background: var(--bg-body);
+            color: var(--primary);
+            border: 1.5px solid var(--primary);
+        }
+
+        .tag-badge:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .blog-post-footer-tags {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .footer-tags-section {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .footer-tags-section strong {
+            color: var(--text-main);
+            margin-right: 5px;
+        }
+
+        .footer-tags-section i {
+            margin-right: 5px;
+            color: var(--primary);
+        }
+
+        .footer-tag {
+            padding: 4px 10px;
+            background: var(--bg-body);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            transition: all 0.2s ease;
+        }
+
+        .footer-tag:hover {
+            border-color: var(--primary);
+            color: var(--primary);
         }
 
         .blog-post-content {
@@ -871,66 +950,6 @@
                 });
             });
         });
-    </script>
-    {% endif %}
-    
-    <!-- Structured Data (JSON-LD) -->
-    {% if page.layout == 'post' %}
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      "headline": "{{ page.title }}",
-      "description": "{% if page.description %}{{ page.description }}{% elsif page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}",
-      "image": "{% if page.image %}{{ site.url }}{{ page.image }}{% else %}{{ site.url }}/assets/images/og-image.jpg{% endif %}",
-      "datePublished": "{{ page.date | date: '%Y-%m-%d' }}",
-      "dateModified": "{{ page.date | date: '%Y-%m-%d' }}",
-      "author": {
-        "@type": "Person",
-        "name": "{{ page.author | default: site.author.name }}",
-        "url": "{{ site.author.linkedin }}"
-      },
-      "publisher": {
-        "@type": "Person",
-        "name": "{{ site.author.name }}",
-        "url": "{{ site.url }}"
-      },
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "{{ site.url }}{{ page.url }}"
-      }
-    }
-    </script>
-    {% else %}
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "{{ site.author.name }}",
-      "url": "{{ site.url }}",
-      "jobTitle": "Data Science Architect (NLP)",
-      "description": "{{ site.description }}",
-      "sameAs": [
-        "{{ site.author.linkedin }}",
-        "{{ site.author.github }}",
-        "{{ site.author.medium }}",
-        "{{ site.author.youtube }}"
-      ],
-      "email": "{{ site.author.email }}"
-    }
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "{{ site.title }}",
-      "url": "{{ site.url }}",
-      "description": "{{ site.description }}",
-      "author": {
-        "@type": "Person",
-        "name": "{{ site.author.name }}"
-      }
-    }
     </script>
     {% endif %}
 </body>

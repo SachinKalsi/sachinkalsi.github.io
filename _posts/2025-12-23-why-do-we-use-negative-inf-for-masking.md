@@ -3,6 +3,16 @@ layout: post
 title: "Why Do We Use Negative Infinity for Masking in Attention?"
 date: 2025-12-23
 author: "Sachin Kalsi"
+description: "Understanding why we use negative infinity instead of zero for masking in transformer attention mechanisms. Learn about causal masking, softmax behavior, and practical implementation in PyTorch."
+tags:
+  - PyTorch
+  - Transformers
+  - Attention Mechanism
+  - Deep Learning
+  - Machine Learning
+categories:
+  - Tutorial
+  - Deep Learning
 ---
 Why Setting Scores to `0` Doesn't Work?
 

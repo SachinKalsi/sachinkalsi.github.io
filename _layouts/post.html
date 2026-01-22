@@ -11,7 +11,7 @@ layout: default
         <div class="blog-post-header">
             <h1 class="blog-post-title" itemprop="headline">{{ page.title }}</h1>
             <div class="blog-post-meta">
-                <time datetime="{{ page.date | date: '%Y-%m-%d' }}" itemprop="datePublished">
+                <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
                     <i class="far fa-calendar"></i> 
                     {{ page.date | date: "%B %d, %Y" }}
                 </time>
@@ -29,14 +29,102 @@ layout: default
                     <span><i class="far fa-clock"></i> {{ words | divided_by: 180 }} min read</span>
                 {% endif %}
             </div>
+            
+            {% if page.tags or page.categories %}
+            <div class="blog-post-tags">
+                {% if page.categories %}
+                <div class="post-categories">
+                    {% for category in page.categories %}
+                    <span class="category-badge">{{ category }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% if page.tags %}
+                <div class="post-tags">
+                    {% for tag in page.tags %}
+                    <span class="tag-badge">#{{ tag }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
         </div>
 
         <div class="blog-post-content" itemprop="articleBody">
             {{ content }}
         </div>
         
-        <meta itemprop="description" content="{% if page.description %}{{ page.description }}{% elsif page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
-        <meta itemprop="image" content="{% if page.image %}{{ site.url }}{{ page.image }}{% else %}{{ site.url }}/assets/images/og-image.jpg{% endif %}">
+        {% if page.tags or page.categories %}
+        <div class="blog-post-footer-tags" itemprop="keywords">
+            {% if page.categories %}
+            <div class="footer-tags-section">
+                <strong><i class="fas fa-folder"></i> Categories:</strong>
+                {% for category in page.categories %}
+                <span class="footer-tag">{{ category }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% if page.tags %}
+            <div class="footer-tags-section">
+                <strong><i class="fas fa-tags"></i> Tags:</strong>
+                {% for tag in page.tags %}
+                <span class="footer-tag">{{ tag }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        {% if page.description %}
+        <meta itemprop="description" content="{{ page.description }}">
+        {% elsif page.excerpt %}
+        <meta itemprop="description" content="{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}">
+        {% endif %}
+        {% if page.image %}
+        <meta itemprop="image" content="{{ site.url }}{{ site.baseurl }}{{ page.image }}">
+        {% endif %}
     </article>
 </div>
+
+<!-- Structured Data (JSON-LD) for Google -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "{{ page.title | escape }}",
+  {% if page.description %}
+  "description": "{{ page.description | escape }}",
+  {% elsif page.excerpt %}
+  "description": "{{ page.excerpt | strip_html | strip_newlines | truncate: 160 | escape }}",
+  {% endif %}
+  {% if page.image %}
+  "image": "{{ site.url }}{{ site.baseurl }}{{ page.image }}",
+  {% else %}
+  "image": "{{ site.url }}{{ site.baseurl }}/assets/images/og-image.jpg",
+  {% endif %}
+  "datePublished": "{{ page.date | date_to_xmlschema }}",
+  "dateModified": "{{ page.last_modified_at | default: page.date | date_to_xmlschema }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ page.author | default: site.author.name | escape }}",
+    "url": "{{ site.author.linkedin }}"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "{{ site.author.name | escape }}",
+    "url": "{{ site.url }}{{ site.baseurl }}"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ site.url }}{{ site.baseurl }}{{ page.url }}"
+  },
+  "url": "{{ site.url }}{{ site.baseurl }}{{ page.url }}"
+  {% if page.tags %}
+  ,"keywords": "{{ page.tags | join: ', ' | escape }}"
+  {% endif %}
+  {% if page.categories %}
+  ,"articleSection": "{{ page.categories | join: ', ' | escape }}"
+  {% endif %}
+}
+</script>
 

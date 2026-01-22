@@ -16,7 +16,7 @@ permalink: /blog/
             <article class="card">
                 <a href="{{ post.url }}">
                     <div class="card-body">
-                        <span class="badge blog blog-badge-inline">Article</span>
+                        <span class="badge blog blog-badge-inline"><i class="fas fa-blog"></i> Article</span>
                         <h3 class="card-title">{{ post.title }}</h3>
                         {% if post.excerpt %}
                         <p class="card-desc">{{ post.excerpt | strip_html | truncatewords: 20 }}</p>
@@ -25,6 +25,20 @@ permalink: /blog/
                             <span><i class="far fa-calendar"></i> {{ post.date | date: "%B %d, %Y" }}</span>
                             <span class="read-more">Read &rarr;</span>
                         </div>
+                        {% if post.tags or post.categories %}
+                        <div class="card-tags">
+                            {% if post.categories %}
+                            {% for category in post.categories limit: 2 %}
+                            <span class="card-tag category">{{ category }}</span>
+                            {% endfor %}
+                            {% endif %}
+                            {% if post.tags %}
+                            {% for tag in post.tags limit: 3 %}
+                            <span class="card-tag">{{ tag }}</span>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                        {% endif %}
                     </div>
                 </a>
             </article>
@@ -74,11 +88,11 @@ permalink: /blog/
             article.innerHTML = `
                 <a href="${item.link}" target="_blank" rel="noopener noreferrer">
                     <div class="card-body">
-                        <span class="badge blog blog-badge-inline">Medium</span>
+                        <span class="badge blog blog-badge-inline"><i class="fab fa-medium"></i> Medium</span>
                         <h3 class="card-title">${item.title}</h3>
                         ${item.description ? `<p class="card-desc">${item.description}</p>` : ''}
                         <div class="card-footer">
-                            <span>Medium</span>
+                            <span><i class="fab fa-medium"></i> Medium</span>
                             <span class="read-more">Read on Medium &rarr;</span>
                         </div>
                     </div>
