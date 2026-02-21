@@ -70,6 +70,23 @@
     <!-- RSS Feed -->
     <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.url }}{{ site.baseurl }}/feed.xml">
 
+    <!-- Math rendering for blog posts (LaTeX in Markdown) -->
+    {% if page.layout == 'post' %}
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    {% endif %}
+
     <!-- Google Analytics (GA4) -->
     {% if site.google_analytics %}
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
@@ -1037,4 +1054,3 @@
 </body>
 
 </html>
-
