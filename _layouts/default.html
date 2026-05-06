@@ -4,61 +4,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% assign seo_title = page.seo_title | default: page.title | default: site.title %}
+    {% assign seo_description = page.description | default: page.excerpt | default: site.description | strip_html | strip_newlines | normalize_whitespace | truncate: 160 %}
+    {% assign canonical_url = page.url | absolute_url %}
+    {% capture full_title %}{% if page.title %}{{ seo_title }} | {{ site.author.name }}{% else %}{{ site.title }}{% endif %}{% endcapture %}
     
     <!-- Primary Meta Tags -->
-    <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
-    {% if page.description %}
-    <meta name="description" content="{{ page.description }}">
-    {% elsif page.excerpt %}
-    <meta name="description" content="{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}">
-    {% else %}
-    <meta name="description" content="{{ site.description }}">
-    {% endif %}
-    <meta name="author" content="{{ site.author.name }}">
-    <meta name="robots" content="index, follow">
+    <title>{% if page.title %}{{ seo_title | escape }} | {{ site.author.name | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
+    <meta name="description" content="{{ seo_description | escape }}">
+    <meta name="author" content="{{ page.author | default: site.author.name | escape }}">
+    <meta name="robots" content="{{ page.robots | default: 'index, follow' }}">
     <meta name="language" content="English">
+    {% if page.keywords %}
+    <meta name="keywords" content="{{ page.keywords | join: ', ' | escape }}">
+    {% elsif page.tags %}
+    <meta name="keywords" content="{{ page.tags | join: ', ' | escape }}">
+    {% elsif site.keywords %}
+    <meta name="keywords" content="{{ site.keywords | join: ', ' | escape }}">
+    {% endif %}
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="{{ site.url }}{{ site.baseurl }}{{ page.url }}">
+    <link rel="canonical" href="{{ canonical_url }}">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
-    <meta property="og:url" content="{{ site.url }}{{ site.baseurl }}{{ page.url }}">
-    <meta property="og:title" content="{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}">
-    {% if page.description %}
-    <meta property="og:description" content="{{ page.description }}">
-    {% elsif page.excerpt %}
-    <meta property="og:description" content="{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}">
-    {% else %}
-    <meta property="og:description" content="{{ site.description }}">
-    {% endif %}
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="og:title" content="{% if page.title %}{{ seo_title | escape }} | {{ site.author.name | escape }}{% else %}{{ site.title | escape }}{% endif %}">
+    <meta property="og:description" content="{{ seo_description | escape }}">
     {% if page.image %}
-    <meta property="og:image" content="{{ site.url }}{{ site.baseurl }}{{ page.image }}">
-    {% else %}
-    <meta property="og:image" content="{{ site.url }}{{ site.baseurl }}/assets/images/og-image.jpg">
+    <meta property="og:image" content="{{ page.image | absolute_url }}">
     {% endif %}
     <meta property="og:site_name" content="{{ site.title }}">
-    <meta property="og:locale" content="en_US">
+    <meta property="og:locale" content="{{ site.lang | default: 'en_US' }}">
     {% if page.layout == 'post' %}
     <meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}">
-    <meta property="article:author" content="{{ site.author.name }}">
+    <meta property="article:modified_time" content="{{ page.last_modified_at | default: page.date | date_to_xmlschema }}">
+    <meta property="article:author" content="{{ page.author | default: site.author.name | escape }}">
+    {% for tag in page.tags %}
+    <meta property="article:tag" content="{{ tag | escape }}">
+    {% endfor %}
     {% endif %}
     
     <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="{{ site.url }}{{ site.baseurl }}{{ page.url }}">
-    <meta name="twitter:title" content="{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}">
-    {% if page.description %}
-    <meta name="twitter:description" content="{{ page.description }}">
-    {% elsif page.excerpt %}
-    <meta name="twitter:description" content="{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}">
-    {% else %}
-    <meta name="twitter:description" content="{{ site.description }}">
-    {% endif %}
+    <meta name="twitter:card" content="{% if page.image %}summary_large_image{% else %}summary{% endif %}">
+    <meta name="twitter:url" content="{{ canonical_url }}">
+    <meta name="twitter:title" content="{% if page.title %}{{ seo_title | escape }} | {{ site.author.name | escape }}{% else %}{{ site.title | escape }}{% endif %}">
+    <meta name="twitter:description" content="{{ seo_description | escape }}">
     {% if page.image %}
-    <meta name="twitter:image" content="{{ site.url }}{{ site.baseurl }}{{ page.image }}">
-    {% else %}
-    <meta name="twitter:image" content="{{ site.url }}{{ site.baseurl }}/assets/images/og-image.jpg">
+    <meta name="twitter:image" content="{{ page.image | absolute_url }}">
     {% endif %}
     <meta name="twitter:creator" content="@sachinkalsi">
     <meta name="twitter:site" content="@sachinkalsi">
@@ -69,6 +62,50 @@
     
     <!-- RSS Feed -->
     <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.url }}{{ site.baseurl }}/feed.xml">
+
+    {% unless page.layout == 'post' %}
+    <!-- Structured Data (JSON-LD) for site identity and search engines -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "{{ site.url }}{{ site.baseurl }}/#person",
+          "name": {{ site.author.name | jsonify }},
+          "url": "{{ site.url }}{{ site.baseurl }}/",
+          "jobTitle": {{ "Data Science Architect (NLP)" | jsonify }},
+          "sameAs": [
+            "{{ site.author.linkedin }}",
+            "{{ site.author.github }}",
+            "{{ site.author.medium }}",
+            "{{ site.author.youtube }}"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "{{ site.url }}{{ site.baseurl }}/#website",
+          "url": "{{ site.url }}{{ site.baseurl }}/",
+          "name": {{ site.title | jsonify }},
+          "description": {{ site.description | jsonify }},
+          "publisher": {
+            "@id": "{{ site.url }}{{ site.baseurl }}/#person"
+          }
+        },
+        {
+          "@type": "WebPage",
+          "@id": "{{ canonical_url }}#webpage",
+          "url": "{{ canonical_url }}",
+          "name": {{ full_title | strip | jsonify }},
+          "description": {{ seo_description | jsonify }},
+          "isPartOf": {
+            "@id": "{{ site.url }}{{ site.baseurl }}/#website"
+          }
+        }
+      ]
+    }
+    </script>
+    {% endunless %}
 
     <!-- Math rendering for blog posts (LaTeX in Markdown) -->
     {% if page.layout == 'post' %}

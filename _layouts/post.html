@@ -29,10 +29,37 @@ layout: default
                     <span><i class="far fa-clock"></i> {{ words | divided_by: 180 }} min read</span>
                 {% endif %}
             </div>
+            {% if page.categories or page.tags %}
+            <div class="blog-post-tags" aria-label="Article topics">
+                {% if page.categories %}
+                <div class="post-categories">
+                    {% for category in page.categories %}
+                    <span class="category-badge">{{ category }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% if page.tags %}
+                <div class="post-tags">
+                    {% for tag in page.tags %}
+                    <span class="tag-badge">{{ tag }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
         </div>
 
         <div class="blog-post-content" itemprop="articleBody">
             {{ content }}
+        </div>
+
+        <div class="blog-post-footer-tags">
+            <div class="footer-tags-section">
+                <strong>More from Sachin:</strong>
+                <a href="/blog/" class="footer-tag">All AI and NLP articles</a>
+                <a href="/" class="footer-tag">Portfolio home</a>
+                <a href="{{ site.author.youtube }}" class="footer-tag" target="_blank" rel="noopener noreferrer">Machine learning videos</a>
+            </div>
         </div>
         
         {% if page.description %}
@@ -51,27 +78,25 @@ layout: default
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "{{ page.title | escape }}",
+  "headline": {{ page.title | jsonify }},
   {% if page.description %}
-  "description": "{{ page.description | escape }}",
+  "description": {{ page.description | jsonify }},
   {% elsif page.excerpt %}
-  "description": "{{ page.excerpt | strip_html | strip_newlines | truncate: 160 | escape }}",
+  "description": {{ page.excerpt | strip_html | strip_newlines | normalize_whitespace | truncate: 160 | jsonify }},
   {% endif %}
   {% if page.image %}
   "image": "{{ site.url }}{{ site.baseurl }}{{ page.image }}",
-  {% else %}
-  "image": "{{ site.url }}{{ site.baseurl }}/assets/images/og-image.jpg",
   {% endif %}
   "datePublished": "{{ page.date | date_to_xmlschema }}",
   "dateModified": "{{ page.last_modified_at | default: page.date | date_to_xmlschema }}",
   "author": {
     "@type": "Person",
-    "name": "{{ page.author | default: site.author.name | escape }}",
+    "name": {{ page.author | default: site.author.name | jsonify }},
     "url": "{{ site.author.linkedin }}"
   },
   "publisher": {
     "@type": "Person",
-    "name": "{{ site.author.name | escape }}",
+    "name": {{ site.author.name | jsonify }},
     "url": "{{ site.url }}{{ site.baseurl }}"
   },
   "mainEntityOfPage": {
@@ -80,11 +105,10 @@ layout: default
   },
   "url": "{{ site.url }}{{ site.baseurl }}{{ page.url }}"
   {% if page.tags %}
-  ,"keywords": "{{ page.tags | join: ', ' | escape }}"
+  ,"keywords": {{ page.tags | join: ', ' | jsonify }}
   {% endif %}
   {% if page.categories %}
-  ,"articleSection": "{{ page.categories | join: ', ' | escape }}"
+  ,"articleSection": {{ page.categories | join: ', ' | jsonify }}
   {% endif %}
 }
 </script>
-
