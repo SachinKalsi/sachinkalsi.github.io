@@ -4,6 +4,7 @@ title: "Why Do We Use Negative Infinity for Masking in Attention?"
 date: 2025-12-23
 author: "Sachin Kalsi"
 description: "Understanding why we use negative infinity instead of zero for masking in transformer attention mechanisms. Learn about causal masking, softmax behavior, and practical implementation in PyTorch."
+image: "/assets/images/posts/why-do-we-use-negative-inf-for-masking/negative-Infinity-for-masking-in-attention.png"
 tags:
   - PyTorch
   - Transformers
@@ -54,6 +55,9 @@ Replace future token scores with $-\infty$ instead of $0$:
 
 **Practical Note:** In FP16 training, we use `-65504` (the minimum float16 value) instead of literal infinity to avoid numerical issues. Use `torch.finfo(dtype).min` to get this value.
 
+
+![contrast between the problematic zero masking and the effective negative infinity masking](/assets/images/posts/why-do-we-use-negative-inf-for-masking/negative-Infinity-for-masking-in-attention-not-zero.png)
+
 ---
 
 ## 4. How to do it in Python?
@@ -63,12 +67,12 @@ import torch
 import torch.nn.functional as F
 
 # Simulated attention scores (Query @ Key.T)
-scores = torch.tensor([[10.0, 2.0, 1, 4], 
+scores = torch.tensor([[10.0, 2.0, 1, 4],
                        [5.0, 11.0, 7, 3],
                        [3, 9, 7, 5],
                        [8, 9, 4, 8]])
 
-mask = torch.tril(torch.ones(scores.shape[1], scores.shape[1])) 
+mask = torch.tril(torch.ones(scores.shape[1], scores.shape[1]))
 # tensor([[1., 0., 0., 0.],
 #       [1., 1., 0., 0.],
 #        [1., 1., 1., 0.],

@@ -27,11 +27,14 @@ author:
   linkedin: "https://www.linkedin.com/in/sachinkalsi/"
   github: "https://github.com/sachinkalsi"
   medium: "https://medium.com/@sachinkalsi"
-  youtube: "https://www.youtube.com/@ml-simplified/"
+  youtube: "https://www.youtube.com/@sachin_kalsi"
 
 # Jekyll Settings
 markdown: kramdown
 highlighter: rouge
+
+sass:
+  style: compressed
 
 # Plugins (GitHub Pages compatible)
 plugins:
