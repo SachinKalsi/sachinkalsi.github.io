@@ -28,15 +28,5 @@
         "description": "Diving Deep into FlashAttention V1: Cracking the Code on Safe Softmax & Online Normalization, exploring Nvidia’s Innovative Algorithm",
         "footerIcon": "fab fa-medium",
         "footerText": "Medium"
-    },
-    {
-    "link": "https://pub.towardsai.net/constrained-decoding-forcing-llms-to-respect-your-taxonomy-3aaaf13329f9",
-    "thumbnail": "https://miro.medium.com/v2/resize:fit:1400/format:webp/1*WnBRjPyHaC_0xH-pV6cyAw.png",
-    "type": "blog",
-    "icon": "fas fa-pen",
-    "title": "Constrained Decoding: Forcing LLMs to Respect Your Taxonomy",
-    "description": "A structural guarantee for LLM classification output",
-    "footerIcon": "fab fa-medium",
-    "footerText": "Towards AI"
     }
 ]
