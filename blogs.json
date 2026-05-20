@@ -1,5 +1,15 @@
 [
     {
+    "link": "https://pub.towardsai.net/constrained-decoding-forcing-llms-to-respect-your-taxonomy-3aaaf13329f9",
+    "thumbnail": "https://miro.medium.com/v2/resize:fit:1400/format:webp/1*WnBRjPyHaC_0xH-pV6cyAw.png",
+    "type": "blog",
+    "icon": "fas fa-pen",
+    "title": "Constrained Decoding: Forcing LLMs to Respect Your Taxonomy",
+    "description": "A structural guarantee for LLM classification output",
+    "footerIcon": "fab fa-medium",
+    "footerText": "Towards AI"
+    },
+    {
         "link": "https://medium.com/@sachinkalsi/flashattention-understanding-gpu-architecture-part-1-0a8a9a0bb725",
         "thumbnail": "https://miro.medium.com/v2/resize:fit:1400/format:webp/1*Bx9065zWcSwhZt1I7QX-aA.png?auto=format&fit=crop&q=80&w=1000",
         "type": "blog",
