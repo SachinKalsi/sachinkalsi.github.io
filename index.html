@@ -69,21 +69,33 @@ keywords:
             <a href="https://www.youtube.com/@sachin_kalsi" class="btn-outline">View All YouTube Videos</a>
         </div>
         <!-- BLOG POSTS SECTION -->
-        <section class="content-section">
+        <section class="content-section" id="technical-writing">
             <div class="section-header">
-                <h2>Blog Posts</h2>
+                <h2>Technical Writing</h2>
             </div>
-            <div class="grid" id="blogs-grid">
-                {% for post in site.posts limit: 3 %}
-                <article class="card">
+            <div class="writing-preview">
+                <div class="writing-preview-copy">
+                    <p>Implementation notes and essays on LLMs, attention, PyTorch, decoding, semantic search, embeddings, and production NLP systems.</p>
+                    <div class="writing-focus-list" aria-label="Writing focus areas">
+                        <span>LLM Systems</span>
+                        <span>Search</span>
+                        <span>Embeddings</span>
+                        <span>Attention</span>
+                        <span>PyTorch</span>
+                        <span>NLP</span>
+                    </div>
+                </div>
+                <div class="home-writing-list" id="blogs-grid">
+                {% for post in site.posts limit: 2 %}
+                <article class="card writing-card writing-list-card">
                     <a href="{{ post.url }}">
                         <div class="card-body">
-                            <span class="badge blog blog-badge-inline"><i class="fas fa-blog"></i> Article</span>
+                            <span class="card-source"><i class="fas fa-blog"></i> Website</span>
                             <h3 class="card-title">{{ post.title }}</h3>
-                            <p class="card-desc">{{ post.description | default: post.excerpt | strip_html | normalize_whitespace | truncatewords: 24 }}</p>
+                            <p class="card-desc">{{ post.description | default: post.excerpt | strip_html | normalize_whitespace | truncatewords: 18 }}</p>
                             {% if post.tags %}
                             <div class="card-tags" aria-label="Topics">
-                                {% for tag in post.tags limit: 3 %}
+                                {% for tag in post.tags limit: 2 %}
                                 <span class="card-tag">{{ tag }}</span>
                                 {% endfor %}
                             </div>
@@ -96,26 +108,24 @@ keywords:
                     </a>
                 </article>
                 {% endfor %}
+                </div>
             </div>
 
             <script>
 
                 function renderExternalBlogs(blogs) {
                     const grid = document.getElementById('blogs-grid');
-                    blogs.slice(0, 3).forEach(item => {
+                    blogs.slice(0, 2).forEach(item => {
                         const article = document.createElement('article');
-                        article.className = 'card';
+                        article.className = 'card writing-card writing-list-card medium-card';
                         article.innerHTML = `
                             <a href="${item.link}" target="_blank" rel="noopener noreferrer">
-                            <!-- <div class="card-img-wrapper">
-                                    <img src="${item.thumbnail}" alt="${item.title}">
-                                    <span class="badge ${item.type}"><i class="${item.icon}"></i> Article</span>
-                            </div> -->
                                 <div class="card-body">
+                                    <span class="card-source"><i class="${item.footerIcon || 'fab fa-medium'}"></i> ${item.footerText || 'Medium'}</span>
                                     <h3 class="card-title">${item.title}</h3>
                                     <p class="card-desc">${item.description}</p>
                                     <div class="card-footer">
-                                        <span><i class="${item.footerIcon}"></i> ${item.footerText}</span>
+                                        <span><i class="fas fa-external-link-alt"></i> External article</span>
                                         <span class="read-more">Read &rarr;</span>
                                     </div>
                                 </div>
@@ -124,25 +134,37 @@ keywords:
                     });
                 }
 
-                // Load from blogs.json, use fallback if it fails
-                fetch('blogs.json')
+                // Load the latest Medium/Towards AI articles for the homepage preview.
+                fetch('medium-blogs.json')
                     .then(response => {
-                        if (!response.ok) throw new Error('Could not load blogs.json');
+                        if (!response.ok) throw new Error('Could not load medium-blogs.json');
                         return response.json();
                     })
                     .then(data => {
                         renderExternalBlogs(data);
-                        console.log('✓ Loaded blogs from blogs.json');
+                        console.log('✓ Loaded external writing from medium-blogs.json');
                     })
                     .catch(error => {
-                        console.log('error loading blogs.json', error);
+                        console.log('error loading medium-blogs.json', error);
+                        return fetch('blogs.json')
+                            .then(response => {
+                                if (!response.ok) throw new Error('Could not load blogs.json');
+                                return response.json();
+                            })
+                            .then(data => {
+                                renderExternalBlogs(data);
+                                console.log('✓ Loaded fallback external writing from blogs.json');
+                            })
+                            .catch(fallbackError => {
+                                console.log('error loading blogs.json', fallbackError);
+                            });
                     });
             </script>
         <!-- <div class="more-container">
             <a href="https://medium.com/@sachinkalsi" class="btn-outline">View All Blog Posts</a>
         </div> -->
         <div class="more-container">
-            <a href="/blog/" class="btn-outline"><i class="fas fa-blog"></i> View All Blog Posts</a>
+            <a href="/blog/" class="btn-outline"><i class="fas fa-pen-nib"></i> View Technical Writing</a>
         </div>
         </section>
 

@@ -2,6 +2,7 @@
 layout: default
 title: "AI, NLP, and Machine Learning Blog"
 description: "Technical articles by Sachin Kalsi on large language models, NLP, PyTorch, transformer attention, Unicode text processing, and machine learning engineering."
+body_class: "writing-page"
 keywords:
   - AI blog
   - NLP articles
@@ -12,20 +13,57 @@ keywords:
 ---
 
 <main class="container">
-    <!-- JEKYLL/MARKDOWN BLOGS SECTION -->
-    <section class="content-section">
-        <div class="section-header">
-            <h2>AI, NLP, and Machine Learning Blog Posts</h2>
+    <section class="writing-hero">
+        <div class="writing-hero-inner">
+            <div>
+                <h1>Writing</h1>
+                <p>
+                    Notes on LLM systems, semantic search, embeddings, retrieval, attention, PyTorch, and NLP engineering.
+                </p>
+            </div>
+            <div class="writing-focus">
+                <div class="writing-focus-title">Topics</div>
+                <div class="writing-focus-list" aria-label="Writing focus areas">
+                    <span>LLM Architecture</span>
+                    <span>Attention</span>
+                    <span>PyTorch</span>
+                    <span>Decoding</span>
+                    <span>Search</span>
+                    <span>Embeddings</span>
+                    <span>Semantic Search</span>
+                    <span>Retrieval</span>
+                    <span>NLP Systems</span>
+                    <span>Text Processing</span>
+                </div>
+            </div>
         </div>
+    </section>
+
+    <!-- JEKYLL/MARKDOWN BLOGS SECTION -->
+    <section class="content-section" id="website-posts">
+        <div class="section-header">
+            <h2>Implementation Notes</h2>
+        </div>
+        <p class="section-kicker">Concise explanations for specific technical problems, with examples and implementation details.</p>
         
-        <div class="grid" id="jekyll-blogs-grid">
+        <div class="grid writing-index-grid" id="jekyll-blogs-grid">
             {% for post in site.posts %}
-            <article class="card">
+            <article class="card writing-card">
                 <a href="{{ post.url }}">
+                    {% if post.image %}
+                    <div class="card-img-wrapper">
+                        <img src="{{ post.image }}" alt="{{ post.title | escape }}">
+                        <span class="badge blog"><i class="fas fa-blog"></i> Website</span>
+                    </div>
+                    {% endif %}
                     <div class="card-body">
-                        <span class="badge blog blog-badge-inline"><i class="fas fa-blog"></i> Article</span>
+                        {% unless post.image %}
+                        <span class="card-source"><i class="fas fa-blog"></i> Website</span>
+                        {% endunless %}
                         <h3 class="card-title">{{ post.title }}</h3>
-                        {% if post.excerpt %}
+                        {% if post.description %}
+                        <p class="card-desc">{{ post.description | truncatewords: 28 }}</p>
+                        {% elsif post.excerpt %}
                         <p class="card-desc">{{ post.excerpt | strip_html | normalize_whitespace | truncatewords: 28 }}</p>
                         {% endif %}
                         {% if post.tags %}
@@ -54,12 +92,13 @@ keywords:
     </section>
 
     <!-- MEDIUM BLOGS SECTION -->
-    <section class="content-section">
+    <section class="content-section" id="medium-articles">
         <div class="section-header">
-            <h2>Medium Articles</h2>
+            <h2>Long-Form Articles</h2>
         </div>
+        <p class="section-kicker">Broader technical essays published externally, including Medium and Towards AI.</p>
         
-        <div class="grid" id="medium-blogs-grid">
+        <div class="grid writing-index-grid" id="medium-blogs-grid">
             <!-- Medium blogs will be loaded here via JavaScript -->
         </div>
 
@@ -84,16 +123,16 @@ keywords:
         grid.innerHTML = '';
         blogs.forEach(item => {
             const article = document.createElement('article');
-            article.className = 'card';
+            article.className = 'card writing-card medium-card';
             article.innerHTML = `
                 <a href="${item.link}" target="_blank" rel="noopener noreferrer">
                     <div class="card-body">
-                        <span class="badge blog blog-badge-inline"><i class="fab fa-medium"></i> Medium</span>
+                        <span class="card-source"><i class="fab fa-medium"></i> ${item.footerText || 'Medium'}</span>
                         <h3 class="card-title">${item.title}</h3>
                         ${item.description ? `<p class="card-desc">${item.description}</p>` : ''}
                         <div class="card-footer">
-                            <span><i class="fab fa-medium"></i> Medium</span>
-                            <span class="read-more">Read on Medium &rarr;</span>
+                            <span><i class="fas fa-up-right-from-square"></i> External article</span>
+                            <span class="read-more">Read &rarr;</span>
                         </div>
                     </div>
                 </a>`;
@@ -116,4 +155,35 @@ keywords:
             document.getElementById('medium-blogs-grid').style.display = 'none';
             document.getElementById('medium-blogs-empty').style.display = 'block';
         });
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "@id": "{{ page.url | absolute_url }}#blog",
+  "name": {{ page.title | jsonify }},
+  "description": {{ page.description | jsonify }},
+  "url": "{{ page.url | absolute_url }}",
+  "author": {
+    "@type": "Person",
+    "name": {{ site.author.name | jsonify }},
+    "url": "{{ site.url }}{{ site.baseurl }}/"
+  },
+  "blogPost": [
+    {% for post in site.posts %}
+    {
+      "@type": "BlogPosting",
+      "headline": {{ post.title | jsonify }},
+      "description": {{ post.description | default: post.excerpt | strip_html | normalize_whitespace | jsonify }},
+      "url": "{{ post.url | absolute_url }}",
+      "datePublished": "{{ post.date | date_to_xmlschema }}",
+      "author": {
+        "@type": "Person",
+        "name": {{ site.author.name | jsonify }}
+      }
+    }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ]
+}
 </script>
