@@ -1,24 +1,4 @@
 [
-     {
-        "link": "https://pub.towardsai.net/constrained-decoding-forcing-llms-to-respect-your-taxonomy-3aaaf13329f9",
-        "thumbnail": "https://miro.medium.com/v2/resize:fit:1400/format:webp/1*WnBRjPyHaC_0xH-pV6cyAw.png",
-        "type": "blog",
-        "icon": "fas fa-pen",
-        "title": "Constrained Decoding: Forcing LLMs to Respect Your Taxonomy",
-        "description": "A structural guarantee for LLM classification output",
-        "footerIcon": "fab fa-medium",
-        "footerText": "Towards AI"
-    },
-    {
-        "link": "https://medium.com/@sachinkalsi/gemma-3-explained-how-google-built-a-faster-leaner-multimodal-ai-277d44cad685",
-        "thumbnail": "https://miro.medium.com/v2/resize:fit:4800/format:webp/1*worFQZcr3C09x1ot1_i4og.png",
-        "type": "blog",
-        "icon": "fas fa-pen",
-        "title": "Gemma 3 Explained: How Google Built a Faster, Leaner Multimodal AI",
-        "description": "Google released the Gemma 3 technical report and it shows real progress in open weights AI. Instead of focusing only on scale, Gemma 3 is built around efficiency.",
-        "footerIcon": "fab fa-medium",
-        "footerText": "Medium"
-    },
     {
         "link": "https://medium.com/@sachinkalsi/flashattention-understanding-gpu-architecture-part-1-0a8a9a0bb725",
         "thumbnail": "https://miro.medium.com/v2/resize:fit:1400/format:webp/1*Bx9065zWcSwhZt1I7QX-aA.png?auto=format&fit=crop&q=80&w=1000",
