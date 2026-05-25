@@ -1,15 +1,19 @@
 ---
 layout: default
 title: "AI, NLP, and Machine Learning Blog"
-description: "Technical articles by Sachin Kalsi on large language models, NLP, PyTorch, transformer attention, Unicode text processing, and machine learning engineering."
+description: "Technical articles and tutorials by Sachin Kalsi on large language models (LLMs), transformer attention, PyTorch, semantic search, vector embeddings, and NLP systems engineering."
 body_class: "writing-page"
 keywords:
-  - AI blog
-  - NLP articles
-  - machine learning tutorials
-  - transformer attention
-  - PyTorch
-  - Unicode text processing
+  - Sachin Kalsi Blog
+  - AI Blog
+  - NLP Tutorials
+  - Large Language Models
+  - Transformer Attention
+  - PyTorch ML
+  - Semantic Search
+  - Vector Embeddings
+  - Text Processing
+  - Machine Learning Engineering
 ---
 
 <main class="container">
@@ -53,13 +57,10 @@ keywords:
                     {% if post.image %}
                     <div class="card-img-wrapper">
                         <img src="{{ post.image }}" alt="{{ post.title | escape }}">
-                        <span class="badge blog"><i class="fas fa-blog"></i> Website</span>
                     </div>
                     {% endif %}
                     <div class="card-body">
-                        {% unless post.image %}
-                        <span class="card-source"><i class="fas fa-blog"></i> Website</span>
-                        {% endunless %}
+                        <span class="card-source"><i class="fas fa-blog"></i> Technical Note</span>
                         <h3 class="card-title">{{ post.title }}</h3>
                         {% if post.description %}
                         <p class="card-desc">{{ post.description | truncatewords: 28 }}</p>
@@ -140,18 +141,47 @@ keywords:
         });
     }
 
-    // Load Medium blogs from medium-blogs.json
-    fetch('/medium-blogs.json')
+    function injectMediumBlogsSchema(blogs) {
+        const schemaData = {
+            "@context": "https://schema.org",
+            "@graph": blogs.map(item => {
+                return {
+                    "@type": "BlogPosting",
+                    "headline": item.title,
+                    "description": item.description || `Article on ${item.title} published on ${item.footerText || 'Medium'}.`,
+                    "url": item.link,
+                    "publisher": {
+                        "@type": "Organization",
+                        "name": item.footerText || "Medium"
+                    },
+                    "author": {
+                        "@type": "Person",
+                        "name": "Sachin Kalsi",
+                        "url": "https://sachinkalsi.github.io"
+                    }
+                };
+            })
+        };
+
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.text = JSON.stringify(schemaData);
+        document.head.appendChild(script);
+    }
+
+    // Load Medium blogs from blogs.json
+    fetch('/blogs.json')
         .then(response => {
-            if (!response.ok) throw new Error('Could not load medium-blogs.json');
+            if (!response.ok) throw new Error('Could not load blogs.json');
             return response.json();
         })
         .then(data => {
             renderMediumBlogs(data);
-            console.log('✓ Loaded Medium blogs from medium-blogs.json');
+            injectMediumBlogsSchema(data);
+            console.log('✓ Loaded Medium blogs and injected schema from blogs.json');
         })
         .catch(error => {
-            console.log('Error loading medium-blogs.json:', error);
+            console.log('Error loading blogs.json:', error);
             document.getElementById('medium-blogs-grid').style.display = 'none';
             document.getElementById('medium-blogs-empty').style.display = 'block';
         });

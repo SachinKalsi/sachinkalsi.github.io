@@ -1,14 +1,17 @@
 ---
 layout: default
-description: "Portfolio of Sachin Kalsi, Data Science Architect specializing in large language models, NLP, semantic search, generative AI, machine learning tutorials, and technical blog posts."
+description: "Portfolio of Sachin Kalsi, Data Science Architect specializing in large language models (LLMs), NLP systems, PyTorch, semantic search, vector embeddings, and machine learning tutorials."
 keywords:
   - Sachin Kalsi
   - Data Science Architect
-  - NLP
   - Large Language Models
-  - Generative AI
+  - LLM Architecture
+  - Natural Language Processing
+  - PyTorch
   - Semantic Search
-  - Machine Learning Blog
+  - Embeddings
+  - Attention Mechanisms
+  - Machine Learning Tutorial
 ---
 
     <!-- MAIN CONTENT -->
@@ -35,18 +38,49 @@ keywords:
                             <a href="${item.link}" target="_blank" rel="noopener noreferrer">
                                 <div class="card-img-wrapper">
                                     <img src="${item.thumbnail}" alt="${item.title}">
-                                    <span class="badge ${item.type}"><i class="${item.icon}"></i> ${item.type}</span>
                                 </div>
                                 <div class="card-body">
+                                    <span class="card-source"><i class="${item.icon}"></i> YouTube Video</span>
                                     <h3 class="card-title">${item.title}</h3>
+                                    <p class="card-desc">${item.description || ''}</p>
                                     <div class="card-footer">
-                                        <span><i class="${item.footerIcon}"></i> ${item.footerText}</span>
+                                        <span><i class="far fa-play-circle"></i> Video Tutorial</span>
                                         <span class="read-more">Watch Now &rarr;</span>
                                     </div>
                                 </div>
                             </a>`;
                         grid.appendChild(article);
                     });
+                }
+
+                function injectVideoSchema(videos) {
+                    const schemaData = {
+                        "@context": "https://schema.org",
+                        "@graph": videos.map(video => {
+                            let videoId = '';
+                            const match = video.link.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^#\&\?]+)/);
+                            if (match) videoId = match[1];
+                            
+                            return {
+                                "@type": "VideoObject",
+                                "name": video.title,
+                                "description": video.description || `Tutorial video on ${video.title} by Sachin Kalsi.`,
+                                "thumbnailUrl": [video.thumbnail],
+                                "uploadDate": video.uploadDate || "2024-01-01T00:00:00Z",
+                                "embedUrl": videoId ? `https://www.youtube.com/embed/${videoId}` : video.link,
+                                "contentUrl": video.link,
+                                "interactionStatistic": {
+                                    "@type": "InteractionCounter",
+                                    "interactionType": { "@type": "WatchAction" }
+                                }
+                            };
+                        })
+                    };
+
+                    const script = document.createElement('script');
+                    script.type = 'application/ld+json';
+                    script.text = JSON.stringify(schemaData);
+                    document.head.appendChild(script);
                 }
 
                 // Load from videos.json, use fallback if it fails
@@ -57,7 +91,8 @@ keywords:
                     })
                     .then(data => {
                         renderVideos(data);
-                        console.log('✓ Loaded videos from videos.json');
+                        injectVideoSchema(data);
+                        console.log('✓ Loaded videos and injected schema from videos.json');
                     })
                     .catch(error => {
                         console.log('error loading videos.json', error);
@@ -75,14 +110,18 @@ keywords:
             </div>
             <div class="writing-preview">
                 <div class="writing-preview-copy">
-                    <p>Implementation notes and essays on LLMs, attention, PyTorch, decoding, semantic search, embeddings, and production NLP systems.</p>
+                    <p>Implementation notes and articles on LLM architecture, attention mechanisms, PyTorch, semantic search, vector embeddings, text processing, and production NLP systems.</p>
                     <div class="writing-focus-list" aria-label="Writing focus areas">
-                        <span>LLM Systems</span>
-                        <span>Search</span>
-                        <span>Embeddings</span>
+                        <span>LLM Architecture</span>
                         <span>Attention</span>
                         <span>PyTorch</span>
-                        <span>NLP</span>
+                        <span>Decoding</span>
+                        <span>Search</span>
+                        <span>Embeddings</span>
+                        <span>Semantic Search</span>
+                        <span>Retrieval</span>
+                        <span>NLP Systems</span>
+                        <span>Text Processing</span>
                     </div>
                 </div>
                 <div class="home-writing-list" id="blogs-grid">
@@ -135,29 +174,17 @@ keywords:
                 }
 
                 // Load the latest Medium/Towards AI articles for the homepage preview.
-                fetch('medium-blogs.json')
+                fetch('blogs.json')
                     .then(response => {
-                        if (!response.ok) throw new Error('Could not load medium-blogs.json');
+                        if (!response.ok) throw new Error('Could not load blogs.json');
                         return response.json();
                     })
                     .then(data => {
                         renderExternalBlogs(data);
-                        console.log('✓ Loaded external writing from medium-blogs.json');
+                        console.log('✓ Loaded external writing from blogs.json');
                     })
                     .catch(error => {
-                        console.log('error loading medium-blogs.json', error);
-                        return fetch('blogs.json')
-                            .then(response => {
-                                if (!response.ok) throw new Error('Could not load blogs.json');
-                                return response.json();
-                            })
-                            .then(data => {
-                                renderExternalBlogs(data);
-                                console.log('✓ Loaded fallback external writing from blogs.json');
-                            })
-                            .catch(fallbackError => {
-                                console.log('error loading blogs.json', fallbackError);
-                            });
+                        console.log('error loading blogs.json', error);
                     });
             </script>
         <!-- <div class="more-container">
