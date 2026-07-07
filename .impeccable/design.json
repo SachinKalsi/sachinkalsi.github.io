@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-07T10:15:00Z",
+  "title": "Design System: Sachin Kalsi Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "signal": { "role": "primary", "displayName": "Signal Orange", "canonical": "oklch(56% 0.18 35)", "tonalRamp": ["#3a1005", "#5c1a0a", "#8a2a12", "#b23a17", "#d94a1f", "#e87a4f", "#f2a583", "#fdece4"] },
+      "paper": { "role": "neutral", "displayName": "Paper", "canonical": "oklch(96% 0.003 260)", "tonalRamp": ["#12141a", "#25272f", "#454b58", "#6b7280", "#848c9c", "#b3b8c4", "#d8dbe2", "#f5f6f8"] },
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "oklch(19% 0.01 260)", "tonalRamp": ["#000000", "#12141a", "#25272f", "#454b58", "#6b7280", "#848c9c", "#b3b8c4", "#d8dbe2"] },
+      "code-bg": { "role": "neutral-dark", "displayName": "Code Block Ink", "canonical": "oklch(17% 0.01 260)", "tonalRamp": ["#0a0b0e", "#14161c", "#2a2d38", "#454b58", "#6b7280", "#848c9c", "#b3b8c4", "#d8dbe2"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Hero Name", "purpose": "Homepage hero name only." },
+      "headline": { "displayName": "Writing Hero", "purpose": "Blog/writing-page condensed header title." },
+      "title": { "displayName": "Section Header", "purpose": "Section headers and card titles." },
+      "label": { "displayName": "Mono Metadata Label", "purpose": "Hero role marker, card source, dates, tags, badges. JetBrains Mono only — never headings or body prose." },
+      "code": { "displayName": "Code", "purpose": "Inline code and code block content." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "ease-border", "value": "border-color 0.15s ease", "purpose": "Card, button, and link hover state — the only motion in the system besides color transitions." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "560px" },
+      { "name": "md", "value": "768px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Main CTA button, ink fill, hovers to signal orange. Flat, no shadow, no lift.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">View Resume</a>",
+      "css": ".ds-btn-primary { display: inline-block; background: #12141a; color: #fff; padding: 10px 20px; border-radius: 3px; font-weight: 600; font-size: 0.88rem; border: 1px solid #12141a; transition: background-color 0.15s ease, border-color 0.15s ease; } .ds-btn-primary:hover, .ds-btn-primary:focus-visible { background: #d94a1f; border-color: #d94a1f; } .ds-btn-primary:focus-visible { outline: 2px solid #d94a1f; outline-offset: 2px; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Outlined secondary action button.",
+      "html": "<a class=\"ds-btn-secondary\" href=\"#\">Contact</a>",
+      "css": ".ds-btn-secondary { display: inline-block; background: #ffffff; border: 1px solid #b3b8c4; color: #12141a; padding: 10px 20px; border-radius: 3px; font-weight: 600; font-size: 0.88rem; transition: border-color 0.15s ease, color 0.15s ease; } .ds-btn-secondary:hover, .ds-btn-secondary:focus-visible { border-color: #d94a1f; color: #d94a1f; } .ds-btn-secondary:focus-visible { outline: 2px solid #d94a1f; outline-offset: 2px; }"
+    },
+    {
+      "name": "Content Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Card used for videos and original blog posts (Implementation Notes). Flat at rest; border turns signal-orange on hover. No shadow, no lift.",
+      "html": "<article class=\"ds-card\"><div class=\"ds-card-badge\">Blog</div><div class=\"ds-card-body\"><span class=\"ds-card-source\">Technical Note</span><h3 class=\"ds-card-title\">Transformer Attention Masking in PyTorch</h3><p class=\"ds-card-desc\">A walkthrough of causal masking in decoder self-attention.</p><div class=\"ds-card-footer\"><span>5 min read</span><span class=\"ds-card-readmore\">Read more &rarr;</span></div></div></article>",
+      "css": ".ds-card { position: relative; background: #ffffff; border-radius: 3px; border: 1px solid #d8dbe2; overflow: hidden; display: flex; flex-direction: column; transition: border-color 0.15s ease; } .ds-card:hover { border-color: #d94a1f; } .ds-card-badge { position: absolute; top: 12px; right: 12px; background: #eefbf3; color: #0f5132; border: 1px solid #9fd8b8; padding: 3px 7px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 500; } .ds-card-body { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; } .ds-card-source { color: #d94a1f; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 500; margin-bottom: 10px; } .ds-card-title { font-family: 'Archivo', sans-serif; font-size: 1.02rem; font-weight: 700; line-height: 1.4; color: #12141a; margin-bottom: 8px; } .ds-card-desc { font-family: 'Archivo', sans-serif; font-size: 0.88rem; color: #454b58; line-height: 1.5; flex-grow: 1; margin-bottom: 16px; } .ds-card-footer { display: flex; justify-content: space-between; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; color: #848c9c; border-top: 1px solid #d8dbe2; padding-top: 12px; } .ds-card-readmore { color: #d94a1f; font-family: 'Archivo', sans-serif; font-weight: 600; }"
+    },
+    {
+      "name": "Repost List Item",
+      "kind": "custom",
+      "refersTo": "repost-item",
+      "description": "Deliberately secondary treatment for syndicated Medium/Towards AI articles — a plain row, not a card, so it never reads as equal weight to an original post.",
+      "html": "<a class=\"ds-repost-item\" href=\"#\"><span class=\"ds-repost-source\">Medium</span><span class=\"ds-repost-title\">Why Attention Isn't All You Need</span><span class=\"ds-repost-arrow\">&#8599;</span></a>",
+      "css": ".ds-repost-item { display: flex; align-items: baseline; gap: 14px; padding: 14px 4px; border-bottom: 1px solid #d8dbe2; text-decoration: none; transition: background-color 0.15s ease; } .ds-repost-item:hover { background: #f5f6f8; } .ds-repost-source { flex: 0 0 auto; width: 90px; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: #848c9c; } .ds-repost-title { flex: 1 1 auto; font-family: 'Archivo', sans-serif; font-size: 0.95rem; font-weight: 500; color: #12141a; } .ds-repost-item:hover .ds-repost-title { color: #d94a1f; } .ds-repost-arrow { color: #848c9c; font-size: 0.8rem; }"
+    },
+    {
+      "name": "Tag Chip",
+      "kind": "chip",
+      "refersTo": "card-tag",
+      "description": "Small metadata tag used on cards and post footers.",
+      "html": "<span class=\"ds-tag\">NLP</span>",
+      "css": ".ds-tag { display: inline-block; padding: 2px 7px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 500; background: #f5f6f8; color: #454b58; border: 1px solid #d8dbe2; }"
+    },
+    {
+      "name": "Post Tag Badge",
+      "kind": "chip",
+      "refersTo": "tag-badge",
+      "description": "Outlined tag pill on blog post pages; fills solid signal-orange on hover. No shadow, no translate.",
+      "html": "<a class=\"ds-tag-badge\" href=\"#\">#embeddings</a>",
+      "css": ".ds-tag-badge { display: inline-block; padding: 5px 11px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; font-weight: 500; background: #f5f6f8; color: #d94a1f; border: 1px solid #d94a1f; transition: background-color 0.15s ease, color 0.15s ease; } .ds-tag-badge:hover, .ds-tag-badge:focus-visible { background: #d94a1f; color: #fff; } .ds-tag-badge:focus-visible { outline: 2px solid #b23a17; outline-offset: 2px; }"
+    },
+    {
+      "name": "Post Pager",
+      "kind": "nav",
+      "refersTo": "post-pager",
+      "description": "Older/newer post navigation at the foot of each article.",
+      "html": "<nav class=\"ds-pager\"><a class=\"ds-pager-link\" href=\"#\"><span class=\"ds-pager-label\">&larr; Older</span><span class=\"ds-pager-title\">Semantic Search with FAISS</span></a><a class=\"ds-pager-link ds-pager-next\" href=\"#\"><span class=\"ds-pager-label\">Newer &rarr;</span><span class=\"ds-pager-title\">Causal Attention Masking</span></a></nav>",
+      "css": ".ds-pager { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; } .ds-pager-link { display: flex; flex-direction: column; gap: 6px; padding: 16px 18px; border: 1px solid #d8dbe2; border-radius: 6px; text-decoration: none; transition: border-color 0.15s ease; } .ds-pager-link:hover { border-color: #d94a1f; } .ds-pager-next { text-align: right; align-items: flex-end; } .ds-pager-label { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: #848c9c; } .ds-pager-title { font-family: 'Archivo', sans-serif; font-size: 0.95rem; font-weight: 600; color: #12141a; } .ds-pager-link:hover .ds-pager-title { color: #d94a1f; }"
+    },
+    {
+      "name": "Section Navigation Header",
+      "kind": "nav",
+      "refersTo": "header",
+      "description": "Homepage hero header now carries an explicit mono role marker. The condensed writing-page header used on the blog remains a separate, unreconciled state (flagged as deferred design debt).",
+      "html": "<header class=\"ds-header\"><div class=\"ds-header-name\">Sachin Kalsi</div><div class=\"ds-header-role\">// Data Science Architect, NLP</div></header>",
+      "css": ".ds-header { background: #ffffff; border-bottom: 1px solid #d8dbe2; padding: 48px 0 40px; text-align: center; } .ds-header-name { font-family: 'Archivo', sans-serif; font-size: clamp(2.25rem, 4vw, 2.9rem); font-weight: 800; letter-spacing: -0.03em; color: #12141a; margin-bottom: 8px; } .ds-header-role { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #d94a1f; font-weight: 500; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Field Notebook",
+    "overview": "The site reads as a working engineer's technical notebook, not a marketing template: high-contrast ink-on-paper for reading, a single committed signal color (burnt-orange) used sparingly and deliberately, and monospace reserved for exactly the places a developer expects it — code, dates, tags, source labels — never as costume. This replaces the prior 'SaaS Template' baseline (royal-blue #2563eb, Slate-50/white, Inter-everywhere, ambient-shadow hover-lift cards), which PRODUCT.md named as an explicit anti-reference undermining credibility with an NLP/ML practitioner audience. The structural skeleton from the previous system is preserved (hero → content sections → grid/list → footer) because it was sound information architecture; what changed is the surface treatment and, on the blog specifically, the decision to stop giving original technical notes and syndicated reposts the same visual weight.",
+    "keyCharacteristics": [
+      "One committed accent — signal orange (#d94a1f) — carries links, hover states, and the hero role marker. Everywhere else is ink/paper neutrals.",
+      "Flat by default: no ambient shadows, no hover-lift transforms. Depth comes from a 1px border shifting to signal-orange on hover.",
+      "Two-family type system: Archivo (sans, UI/display/body) + JetBrains Mono (code, dates, tags, source labels) — a real contrast axis.",
+      "Original blog posts (card grid, 'Implementation Notes') are visually distinct from syndicated reposts (compact row list, 'Also Published Elsewhere').",
+      "Sharper geometry: 3px card radius (down from 8-16px), signaling precision over the prior rounded-SaaS softness."
+    ],
+    "rules": [
+      { "name": "The One Accent Rule", "body": "Signal orange is the only saturated color on the site. If a new component reaches for a second bright hue, that's drift.", "section": "colors" },
+      { "name": "The Mono-Is-Metadata Rule", "body": "JetBrains Mono is reserved for metadata and code — dates, tags, source labels, badges. It never appears in headings or body prose.", "section": "typography" },
+      { "name": "The Flat-By-Default Rule", "body": "No box-shadow for elevation anywhere. Cards, buttons, and badges use border-color changes, not shadows or transforms, to signal state.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do spend signal-orange deliberately — links, hovers, one hero marker, tag accents.",
+      "Do keep JetBrains Mono scoped to metadata and code; Archivo carries all prose and headings.",
+      "Do keep the repost list visually lighter than the Implementation Notes card grid — the distinction is the point.",
+      "Do keep cards and buttons flat; signal state with border-color, not shadow or transform."
+    ],
+    "donts": [
+      "Don't reintroduce #2563eb royal-blue, Slate-50/white, or Inter — that system is retired.",
+      "Don't bring back translateY(-4px) hover-lift or ambient box-shadows on cards.",
+      "Don't use a border-left accent stripe on quotes, callouts, or preview copy.",
+      "Don't give a Medium/external repost the same .card treatment as an original post.",
+      "Don't justify body text — left-aligned with text-wrap: pretty is the standard."
+    ]
+  }
+}
