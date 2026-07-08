@@ -129,7 +129,7 @@ keywords:
                 <article class="card writing-card writing-list-card">
                     <a href="{{ post.url }}">
                         <div class="card-body">
-                            <span class="card-source"><i class="fas fa-blog"></i> Website</span>
+                            <span class="card-source"><i class="fas fa-blog"></i> Technical Note</span>
                             <h3 class="card-title">{{ post.title }}</h3>
                             <p class="card-desc">{{ post.description | default: post.excerpt | strip_html | normalize_whitespace | truncatewords: 18 }}</p>
                             {% if post.tags %}
@@ -150,46 +150,6 @@ keywords:
                 </div>
             </div>
 
-            <script>
-
-                function renderExternalBlogs(blogs) {
-                    const grid = document.getElementById('blogs-grid');
-                    blogs.slice(0, 2).forEach(item => {
-                        const article = document.createElement('article');
-                        article.className = 'card writing-card writing-list-card medium-card';
-                        article.innerHTML = `
-                            <a href="${item.link}" target="_blank" rel="noopener noreferrer">
-                                <div class="card-body">
-                                    <span class="card-source"><i class="${item.footerIcon || 'fab fa-medium'}"></i> ${item.footerText || 'Medium'}</span>
-                                    <h3 class="card-title">${item.title}</h3>
-                                    <p class="card-desc">${item.description}</p>
-                                    <div class="card-footer">
-                                        <span><i class="fas fa-external-link-alt"></i> External article</span>
-                                        <span class="read-more">Read &rarr;</span>
-                                    </div>
-                                </div>
-                            </a>`;
-                        grid.appendChild(article);
-                    });
-                }
-
-                // Load the latest Medium/Towards AI articles for the homepage preview.
-                fetch('blogs.json')
-                    .then(response => {
-                        if (!response.ok) throw new Error('Could not load blogs.json');
-                        return response.json();
-                    })
-                    .then(data => {
-                        renderExternalBlogs(data);
-                        console.log('✓ Loaded external writing from blogs.json');
-                    })
-                    .catch(error => {
-                        console.log('error loading blogs.json', error);
-                    });
-            </script>
-        <!-- <div class="more-container">
-            <a href="https://medium.com/@sachinkalsi" class="btn-outline">View All Blog Posts</a>
-        </div> -->
         <div class="more-container">
             <a href="/blog/" class="btn-outline"><i class="fas fa-pen-nib"></i> View Technical Writing</a>
         </div>

@@ -92,20 +92,19 @@ keywords:
         {% endif %}
     </section>
 
-    <!-- MEDIUM BLOGS SECTION -->
+    <!-- MEDIUM / EXTERNAL REPOSTS: deliberately secondary — a reference list, not a card grid. -->
     <section class="content-section" id="medium-articles">
         <div class="section-header">
-            <h2>Long-Form Articles</h2>
+            <h2>Also Published Elsewhere</h2>
         </div>
-        <p class="section-kicker">Broader technical essays published externally, including Medium and Towards AI.</p>
-        
-        <div class="grid writing-index-grid" id="medium-blogs-grid">
-            <!-- Medium blogs will be loaded here via JavaScript -->
+        <p class="section-kicker">Reposts and adaptations of the notes above, syndicated to Medium and Towards AI. Start with Implementation Notes for the original technical depth.</p>
+
+        <div class="repost-list" id="medium-blogs-grid">
+            <!-- Repost rows will be loaded here via JavaScript -->
         </div>
 
-        <div id="medium-blogs-empty" style="text-align: center; padding: 60px 20px; color: var(--text-muted); display: none;">
-            <i class="fab fa-medium" style="font-size: 4rem; margin-bottom: 20px; opacity: 0.3;"></i>
-            <p style="font-size: 1.2rem;">No Medium articles available.</p>
+        <div class="repost-empty" id="medium-blogs-empty" style="display: none;">
+            No externally syndicated articles yet.
         </div>
     </section>
 </main>
@@ -114,7 +113,7 @@ keywords:
     function renderMediumBlogs(blogs) {
         const grid = document.getElementById('medium-blogs-grid');
         const emptyDiv = document.getElementById('medium-blogs-empty');
-        
+
         if (!blogs || blogs.length === 0) {
             grid.style.display = 'none';
             emptyDiv.style.display = 'block';
@@ -123,21 +122,16 @@ keywords:
 
         grid.innerHTML = '';
         blogs.forEach(item => {
-            const article = document.createElement('article');
-            article.className = 'card writing-card medium-card';
-            article.innerHTML = `
-                <a href="${item.link}" target="_blank" rel="noopener noreferrer">
-                    <div class="card-body">
-                        <span class="card-source"><i class="fab fa-medium"></i> ${item.footerText || 'Medium'}</span>
-                        <h3 class="card-title">${item.title}</h3>
-                        ${item.description ? `<p class="card-desc">${item.description}</p>` : ''}
-                        <div class="card-footer">
-                            <span><i class="fas fa-up-right-from-square"></i> External article</span>
-                            <span class="read-more">Read &rarr;</span>
-                        </div>
-                    </div>
-                </a>`;
-            grid.appendChild(article);
+            const row = document.createElement('a');
+            row.className = 'repost-item';
+            row.href = item.link;
+            row.target = '_blank';
+            row.rel = 'noopener noreferrer';
+            row.innerHTML = `
+                <span class="repost-source"><i class="fab fa-medium"></i> ${item.footerText || 'Medium'}</span>
+                <span class="repost-title">${item.title}</span>
+                <span class="repost-arrow"><i class="fas fa-up-right-from-square"></i></span>`;
+            grid.appendChild(row);
         });
     }
 

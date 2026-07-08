@@ -61,7 +61,67 @@ layout: default
                 <a href="{{ site.author.youtube }}" class="footer-tag" target="_blank" rel="noopener noreferrer">Machine learning videos</a>
             </div>
         </div>
-        
+
+        {% comment %} Locate this post's position in the reverse-chronological site.posts list. {% endcomment %}
+        {% assign all_posts = site.posts %}
+        {% assign total_posts = all_posts.size %}
+        {% assign current_index = -1 %}
+        {% for p in all_posts %}
+            {% if p.url == page.url %}
+                {% assign current_index = forloop.index0 %}
+            {% endif %}
+        {% endfor %}
+        {% assign newer_post = nil %}
+        {% assign older_post = nil %}
+        {% if current_index > 0 %}
+            {% assign newer_index = current_index | minus: 1 %}
+            {% assign newer_post = all_posts[newer_index] %}
+        {% endif %}
+        {% assign older_index = current_index | plus: 1 %}
+        {% if current_index > -1 and older_index < total_posts %}
+            {% assign older_post = all_posts[older_index] %}
+        {% endif %}
+
+        {% if newer_post or older_post %}
+        <nav class="post-pager" aria-label="Post navigation">
+            <a class="post-pager-link post-pager-prev {% unless older_post %}post-pager-disabled{% endunless %}"
+               {% if older_post %}href="{{ older_post.url }}"{% endif %}>
+                <span class="post-pager-label"><i class="fas fa-arrow-left"></i> Older</span>
+                {% if older_post %}<span class="post-pager-title">{{ older_post.title }}</span>{% endif %}
+            </a>
+            <a class="post-pager-link post-pager-next {% unless newer_post %}post-pager-disabled{% endunless %}"
+               {% if newer_post %}href="{{ newer_post.url }}"{% endif %}>
+                <span class="post-pager-label">Newer <i class="fas fa-arrow-right"></i></span>
+                {% if newer_post %}<span class="post-pager-title">{{ newer_post.title }}</span>{% endif %}
+            </a>
+        </nav>
+        {% endif %}
+
+        {% comment %} Related posts: same-tag notes, capped at 3, excluding the current post. {% endcomment %}
+        {% assign shown_related = 0 %}
+        {% capture related_markup %}
+            {% for p in site.posts %}
+                {% if p.url != page.url and page.tags and shown_related < 3 %}
+                    {% assign shared_tags = p.tags | intersect: page.tags %}
+                    {% if shared_tags.size > 0 %}
+                        <a class="related-post-item" href="{{ p.url }}">
+                            <span class="related-post-title">{{ p.title }}</span>
+                            <span class="related-post-tag"><i class="fas fa-tag"></i> {{ shared_tags | first }}</span>
+                        </a>
+                        {% assign shown_related = shown_related | plus: 1 %}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        {% endcapture %}
+        {% if related_markup | strip != "" %}
+        <div class="related-posts">
+            <div class="related-posts-title">Related notes</div>
+            <div class="related-posts-list">
+                {{ related_markup }}
+            </div>
+        </div>
+        {% endif %}
+
         {% if page.description %}
         <meta itemprop="description" content="{{ page.description }}">
         {% elsif page.excerpt %}
