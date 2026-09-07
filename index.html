@@ -1,9 +1,9 @@
 ---
 layout: default
-description: "Sachin Kalsi, Data Science Architect, on production LLM and NLP systems: semantic search, vector embeddings, retrieval, and attention internals."
+description: "Sachin Kalsi, Principal Data Scientist, on production LLM and NLP systems: semantic search, vector embeddings, retrieval, and attention internals."
 keywords:
   - Sachin Kalsi
-  - Data Science Architect
+  - Principal Data Scientist
   - Large Language Models
   - LLM Architecture
   - Natural Language Processing
@@ -17,13 +17,54 @@ keywords:
     <!-- MAIN CONTENT -->
     <main class="container">
 
+        <!-- BLOG POSTS SECTION -->
+        <section class="content-section" id="technical-writing">
+            <div class="section-header">
+                <h2>Technical Writing</h2>
+            </div>
+
+            <div class="grid" id="blogs-grid">
+                {% for post in site.posts limit: 3 %}
+                <article class="card writing-card">
+                    <a href="{{ post.url }}">
+                        {% if post.image %}
+                        <div class="card-img-wrapper">
+                            <img src="{{ post.image }}" alt="{{ post.image_alt | default: post.title | escape }}" loading="lazy" width="{{ post.image_width | default: 1200 }}" height="{{ post.image_height | default: 630 }}">
+                        </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <span class="card-source"><i class="fas fa-blog"></i> Technical Note</span>
+                            <h3 class="card-title">{{ post.title }}</h3>
+                            <p class="card-desc">{{ post.description | default: post.excerpt | strip_html | normalize_whitespace | truncatewords: 18 }}</p>
+                            {% if post.tags %}
+                            <div class="card-tags" aria-label="Topics">
+                                {% for tag in post.tags limit: 2 %}
+                                <span class="card-tag">{{ tag }}</span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            <div class="card-footer">
+                                <span><i class="far fa-calendar"></i> {{ post.date | date: "%B %d, %Y" }}</span>
+                                <span class="read-more">Read &rarr;</span>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+                {% endfor %}
+            </div>
+
+        <div class="more-container">
+            <a href="/blog/" class="btn-outline"><i class="fas fa-pen-nib"></i> View Technical Writing</a>
+        </div>
+        </section>
+
         <!-- YOUTUBE VIDEOS SECTION -->
         <section class="content-section">
             <div class="section-header">
                 <h2>YouTube Videos</h2>
             </div>
             <div class="grid" id="videos-grid">
-                {% for item in site.data.videos %}
+                {% for item in site.data.videos limit: 3 %}
                 <article class="card">
                     <a href="{{ item.link }}" target="_blank" rel="noopener noreferrer">
                         <div class="card-img-wrapper">
@@ -47,58 +88,6 @@ keywords:
         <div class="more-container">
             <a href="https://www.youtube.com/@sachin_kalsi" class="btn-outline">View All YouTube Videos</a>
         </div>
-        <!-- BLOG POSTS SECTION -->
-        <section class="content-section" id="technical-writing">
-            <div class="section-header">
-                <h2>Technical Writing</h2>
-            </div>
-            <div class="writing-preview">
-                <div class="writing-preview-copy">
-                    <p>Implementation notes and articles on LLM architecture, attention mechanisms, PyTorch, semantic search, vector embeddings, text processing, and production NLP systems.</p>
-                    <div class="writing-focus-list" aria-label="Writing focus areas">
-                        <span>LLM Architecture</span>
-                        <span>Attention</span>
-                        <span>PyTorch</span>
-                        <span>Decoding</span>
-                        <span>Search</span>
-                        <span>Embeddings</span>
-                        <span>Semantic Search</span>
-                        <span>Retrieval</span>
-                        <span>NLP Systems</span>
-                        <span>Text Processing</span>
-                    </div>
-                </div>
-                <div class="home-writing-list" id="blogs-grid">
-                {% for post in site.posts limit: 2 %}
-                <article class="card writing-card writing-list-card">
-                    <a href="{{ post.url }}">
-                        <div class="card-body">
-                            <span class="card-source"><i class="fas fa-blog"></i> Technical Note</span>
-                            <h3 class="card-title">{{ post.title }}</h3>
-                            <p class="card-desc">{{ post.description | default: post.excerpt | strip_html | normalize_whitespace | truncatewords: 18 }}</p>
-                            {% if post.tags %}
-                            <div class="card-tags" aria-label="Topics">
-                                {% for tag in post.tags limit: 2 %}
-                                <span class="card-tag">{{ tag }}</span>
-                                {% endfor %}
-                            </div>
-                            {% endif %}
-                            <div class="card-footer">
-                                <span><i class="far fa-calendar"></i> {{ post.date | date: "%B %d, %Y" }}</span>
-                                <span class="read-more">Read &rarr;</span>
-                            </div>
-                        </div>
-                    </a>
-                </article>
-                {% endfor %}
-                </div>
-            </div>
-
-        <div class="more-container">
-            <a href="/blog/" class="btn-outline"><i class="fas fa-pen-nib"></i> View Technical Writing</a>
-        </div>
-        </section>
-
 
 </main>
 
@@ -107,7 +96,7 @@ keywords:
 {
   "@context": "https://schema.org",
   "@graph": [
-{%- for item in site.data.videos %}
+{%- for item in site.data.videos limit: 3 %}
     {
       "@type": "VideoObject",
       "name": {{ item.title | jsonify }},
