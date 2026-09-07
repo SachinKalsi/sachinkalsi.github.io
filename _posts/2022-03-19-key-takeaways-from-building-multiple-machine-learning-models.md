@@ -16,7 +16,7 @@ tags:
   - Weight Initialization
 # Migrated from Medium. Set the Medium story canonical to this URL.
 ---
-Here is a list of my major key takeaways from doing various machine learning & deep learning experiments and reading several research papers and going through the courses. etc.
+Here is a list of my major key takeaways from doing various machine learning & deep learning experiments and reading several research papers and going through the courses. etc.
 
 **Weight initialization**
 
@@ -86,7 +86,7 @@ Here is a list of my major key takeaways from doing various machine learning & d
 
 6. In *eager execution*, operations are evaluated immediately. In *graph execution*, a computational graph is constructed for later evaluation. Tensorflow defaults to eager execution
 
-## Visualizing Your Embeddings (SNE, t-SNE, UMAP)
+## Visualizing Your Embeddings (SNE, t-SNE, UMAP)
 
 1. SNE & t-SNE use KL divergence as the loss function
 
@@ -98,13 +98,13 @@ Here is a list of my major key takeaways from doing various machine learning & d
 
 5. UMAP uses cross entropy loss and uses spectral initialization (not random) and so different runs of UMAP produce the same results andUMAP is backed up by strong theory
 
-## Data is KING
+## Data is KING
 
-Yes, model parameters, different initialization techniques, feature engineering, model architecture, etc matters in building a machine-learning solution to a problem. But if the data is not good then none of this matters. Always always always, make sure data is good and cleaned because Data is king
+Yes, model parameters, different initialization techniques, feature engineering, model architecture, etc matters in building a machine-learning solution to a problem. But if the data is not good then none of this matters. Always always always, make sure data is good and cleaned because Data is king
 
-## to be contd.
+## to be contd.
 
-**Interpretability, Spark, Language Model, MLOps, reading research papers**
+**Interpretability, Spark, Language Model, MLOps, reading research papers**
 
 P.S: This page will be updated periodically
 

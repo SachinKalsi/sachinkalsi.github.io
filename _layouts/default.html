@@ -758,86 +758,6 @@
             border-top-color: var(--border);
         }
 
-        /* Repost list: deliberately secondary to the primary card grid above.
-           Compact rows, not cards, so a visitor never confuses a syndicated
-           summary with original technical depth. */
-        .repost-list {
-            display: flex;
-            flex-direction: column;
-            border-top: 1px solid var(--border);
-        }
-
-        .repost-item {
-            display: flex;
-            align-items: baseline;
-            gap: 14px;
-            padding: 14px 4px;
-            border-bottom: 1px solid var(--border);
-            transition: background-color 0.15s ease;
-        }
-
-        .repost-item:hover {
-            background: var(--paper);
-        }
-
-        .repost-source {
-            flex: 0 0 auto;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.72rem;
-            color: var(--ink-faint);
-            width: 90px;
-        }
-
-        .repost-body {
-            flex: 1 1 auto;
-            min-width: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .repost-title {
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: var(--ink);
-        }
-
-        .repost-desc {
-            font-size: 0.85rem;
-            line-height: 1.55;
-            color: var(--ink-soft);
-        }
-
-        .repost-item:hover .repost-title {
-            color: var(--signal);
-        }
-
-        .repost-arrow {
-            flex: 0 0 auto;
-            font-size: 0.8rem;
-            color: var(--ink-faint);
-        }
-
-        .repost-empty {
-            padding: 20px 4px;
-            color: var(--ink-faint);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-        }
-
-        @media (max-width: 560px) {
-            .repost-item {
-                flex-wrap: wrap;
-            }
-
-            .repost-source {
-                width: auto;
-            }
-        }
-
         .footer-nav {
             display: flex;
             flex-wrap: wrap;
@@ -1311,6 +1231,15 @@
             border: none;
             border-top: 2px solid var(--border);
             margin: 40px 0;
+        }
+
+        /* Display math cannot wrap, so let anything too wide scroll in its own box
+           rather than forcing the page to scroll sideways on mobile. */
+        .blog-post-content mjx-container[display="true"] {
+            overflow-x: auto;
+            overflow-y: hidden;
+            max-width: 100%;
+            padding: 4px 0;
         }
 
         .blog-post-content table {

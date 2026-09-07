@@ -18,7 +18,7 @@ tags:
 ---
 ![](/assets/images/posts/flashattention-understanding-gpu-architecture-part-1/flashattention-understanding-gpu-architecture-part-1-1.png)
 
-*Source: Image by the author.*
+*Source: Image by the author.*
 
 ## Introduction
 
@@ -26,13 +26,13 @@ In this three-part blog series, we will delve into the intricate world of FlashA
 
 Before we explore FlashAttention in detail, it’s crucial to have a solid grasp of the underlying hardware, specifically GPU (Graphics Processing Unit) architecture, as ***FlashAttention leverages the GPU for efficient execution***. Let’s break down the essential concepts:
 
-## How Data Moves Through a System
+## How Data Moves Through a System
 
 ![](/assets/images/posts/flashattention-understanding-gpu-architecture-part-1/flashattention-understanding-gpu-architecture-part-1-2.png)
 
-*Source: Image by the author.*
+*Source: Image by the author.*
 
-To understand how data moves within a system, let’s begin with a simple breakdown. Data typically starts on the hard disk (HDD drive). However, for processing, we need this data in the Random Access Memory (RAM), also called main memory. Depending on the system, there may be multiple layers of memory, each with varying speeds and sizes.
+To understand how data moves within a system, let’s begin with a simple breakdown. Data typically starts on the hard disk (HDD drive). However, for processing, we need this data in the Random Access Memory (RAM), also called main memory. Depending on the system, there may be multiple layers of memory, each with varying speeds and sizes.
 
 1. **L3 and L2 Cache**: Some systems have L3 or L2 cache implemented, which is a fast memory compared to RAM. These caches help improve data access speed and are typically in the megabytes (MBs) range.
 
@@ -62,17 +62,17 @@ It is indeed essential to minimize data movement between these storage levels to
 
 8. **Kernel Fusion**: Kernel fusion is a technique that combines multiple operations into a single kernel or function. This reduces the need to transfer data between different stages of computation, minimizing data movement and memory access, and improving overall performance.
 
-> In the case of NVIDIA A100 80GB GPUs, for instance, HBM may be implemented using 6 vertical stacks, where each stack, except one, contains 16GB of memory, summing up to the total GPU memory.
+> In the case of NVIDIA A100 80GB GPUs, for instance, HBM may be implemented using 6 vertical stacks, where each stack, except one, contains 16GB of memory, summing up to the total GPU memory.
 
 Remember, to fully utilize GPU processing power, you need to ensure that data can be moved efficiently between GPU memory, cache, and processing units.
 
-## FlashAttention and GPU Memory
+## FlashAttention and GPU Memory
 
-One of the challenges in training large language models is efficient memory usage. As the demand for GPU memory increases, optimizing the memory hierarchy becomes crucial. FlashAttention is designed to maximize the utilization of GPU memory and leverage its high-speed components, such as tensor cores.
+One of the challenges in training large language models is efficient memory usage. As the demand for GPU memory increases, optimizing the memory hierarchy becomes crucial. FlashAttention is designed to maximize the utilization of GPU memory and leverage its high-speed components, such as tensor cores.
 
 The process of optimizing involves increasing the data throughput between different levels of memory, such as from GPU memory to L2 cache, and ensuring that data fits into on-chip memory like L1 cache or SRAM. This optimization allows FlashAttention to unlock the full potential of the GPU’s parallel processing power. By fusing kernels, FlashAttention can achieve faster execution and improved memory efficiency, making it a crucial optimization technique.
 
-In [Part 2](/blog/flashattention-an-advancement-in-gpu-acceleration-for-training-llms/) of this series, we will delve deeper into the FlashAttention algorithm and how it leverages GPU architecture to enhance the performance of language models.
+In [Part 2](/blog/flashattention-an-advancement-in-gpu-acceleration-for-training-llms/) of this series, we will delve deeper into the FlashAttention algorithm and how it leverages GPU architecture to enhance the performance of language models.
 
 ### References
 
