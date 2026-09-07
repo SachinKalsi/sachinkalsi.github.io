@@ -6,22 +6,6 @@ robots: "noindex, follow"
 sitemap: false
 ---
 
-<script>
-    // High-speed router for GSC 404 paths
-    (function() {
-        const path = window.location.pathname.toLowerCase();
-        
-        // Redirect any missing /blog/... pages to the main /blog/ directory
-        if (path.startsWith('/blog/') && path !== '/blog/' && path !== '/blog/index.html') {
-            window.location.replace('/blog/');
-        } 
-        // Redirect any missing /resume... paths to the homepage /
-        else if (path.startsWith('/resume') && !path.endsWith('/sachin_kalsi.pdf')) {
-            window.location.replace('/');
-        }
-    })();
-</script>
-
 <main class="container" style="text-align: center; padding: 100px 20px; min-height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
     <div style="font-size: 5.5rem; font-weight: 800; color: var(--border); line-height: 1; margin-bottom: 20px; letter-spacing: -0.04em;">404</div>
     <h1 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.02em;">Page Not Found</h1>

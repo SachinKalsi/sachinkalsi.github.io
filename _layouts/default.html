@@ -8,6 +8,18 @@
     {% assign seo_description = page.description | default: page.excerpt | default: site.description | strip_html | strip_newlines | normalize_whitespace | truncate: 160 %}
     {% assign canonical_url = page.url | absolute_url %}
     {% capture full_title %}{% if page.title %}{{ seo_title }} | {{ site.author.name }}{% else %}{{ site.title }}{% endif %}{% endcapture %}
+    {% comment %} Social preview image: per-page `image:`, else the site-wide default.
+                  Dimensions only apply to the default; a per-page image declares its own. {% endcomment %}
+    {% assign social_image = page.image | default: site.og_image %}
+    {% if page.image %}
+      {% assign social_image_width = page.image_width | default: site.og_image_width %}
+      {% assign social_image_height = page.image_height | default: site.og_image_height %}
+      {% assign social_image_alt = page.image_alt | default: seo_title %}
+    {% else %}
+      {% assign social_image_width = site.og_image_width %}
+      {% assign social_image_height = site.og_image_height %}
+      {% assign social_image_alt = site.og_image_alt | default: seo_title %}
+    {% endif %}
     
     <!-- Primary Meta Tags -->
     <title>{% if page.title %}{{ seo_title | escape }} | {{ site.author.name | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
@@ -31,8 +43,11 @@
     <meta property="og:url" content="{{ canonical_url }}">
     <meta property="og:title" content="{% if page.title %}{{ seo_title | escape }} | {{ site.author.name | escape }}{% else %}{{ site.title | escape }}{% endif %}">
     <meta property="og:description" content="{{ seo_description | escape }}">
-    {% if page.image %}
-    <meta property="og:image" content="{{ page.image | absolute_url }}">
+    {% if social_image %}
+    <meta property="og:image" content="{{ social_image | absolute_url }}">
+    <meta property="og:image:width" content="{{ social_image_width }}">
+    <meta property="og:image:height" content="{{ social_image_height }}">
+    <meta property="og:image:alt" content="{{ social_image_alt | escape }}">
     {% endif %}
     <meta property="og:site_name" content="{{ site.title }}">
     <meta property="og:locale" content="{{ site.lang | default: 'en_US' }}">
@@ -46,12 +61,13 @@
     {% endif %}
     
     <!-- Twitter Card -->
-    <meta name="twitter:card" content="{% if page.image %}summary_large_image{% else %}summary{% endif %}">
+    <meta name="twitter:card" content="{% if social_image %}summary_large_image{% else %}summary{% endif %}">
     <meta name="twitter:url" content="{{ canonical_url }}">
     <meta name="twitter:title" content="{% if page.title %}{{ seo_title | escape }} | {{ site.author.name | escape }}{% else %}{{ site.title | escape }}{% endif %}">
     <meta name="twitter:description" content="{{ seo_description | escape }}">
-    {% if page.image %}
-    <meta name="twitter:image" content="{{ page.image | absolute_url }}">
+    {% if social_image %}
+    <meta name="twitter:image" content="{{ social_image | absolute_url }}">
+    <meta name="twitter:image:alt" content="{{ social_image_alt | escape }}">
     {% endif %}
     <meta name="twitter:creator" content="@sachinkalsi">
     <meta name="twitter:site" content="@sachinkalsi">
@@ -61,9 +77,10 @@
     <link rel="author" href="{{ site.author.linkedin }}">
     
     <!-- RSS Feed -->
-    <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.url }}{{ site.baseurl }}/feed.xml">
+    <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ site.url }}{{ site.baseurl }}/feed.xml">
 
-    {% unless page.layout == 'post' %}
+    {% comment %} Site identity graph. Emitted on EVERY page, posts included — post
+                  layouts reference #person / #webpage by @id. {% endcomment %}
     <!-- Structured Data (JSON-LD) for site identity and search engines -->
     <script type="application/ld+json">
     {
@@ -74,7 +91,10 @@
           "@id": "{{ site.url }}{{ site.baseurl }}/#person",
           "name": {{ site.author.name | jsonify }},
           "url": "{{ site.url }}{{ site.baseurl }}/",
-          "jobTitle": {{ "Data Science Architect (NLP)" | jsonify }},
+          "jobTitle": {{ site.author.role | jsonify }},
+          {% if site.author.location %}
+          "address": { "@type": "PostalAddress", "addressLocality": {{ site.author.location | jsonify }} },
+          {% endif %}
           "sameAs": [
             "{{ site.author.linkedin }}",
             "{{ site.author.github }}",
@@ -105,7 +125,6 @@
       ]
     }
     </script>
-    {% endunless %}
 
     <!-- Math rendering for blog posts (LaTeX in Markdown) -->
     {% if page.layout == 'post' %}
@@ -701,8 +720,15 @@
             /* Inherits from .card */
         }
 
+        /* Post thumbnails are text-bearing diagrams / OG cards, so they must never be
+           cropped. Match the 1.91:1 OG ratio and letterbox anything off-ratio. */
         .writing-card .card-img-wrapper {
-            height: 140px;
+            height: auto;
+            aspect-ratio: 1200 / 630;
+        }
+
+        .writing-card .card-img-wrapper img {
+            object-fit: contain;
         }
 
         .writing-list-card {
@@ -765,12 +791,24 @@
             width: 90px;
         }
 
-        .repost-title {
+        .repost-body {
             flex: 1 1 auto;
             min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .repost-title {
             font-size: 0.95rem;
             font-weight: 500;
             color: var(--ink);
+        }
+
+        .repost-desc {
+            font-size: 0.85rem;
+            line-height: 1.55;
+            color: var(--ink-soft);
         }
 
         .repost-item:hover .repost-title {
@@ -798,6 +836,23 @@
             .repost-source {
                 width: auto;
             }
+        }
+
+        .footer-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px 22px;
+            margin-bottom: 18px;
+            font-size: 0.88rem;
+        }
+
+        .footer-nav a {
+            color: var(--ink-soft);
+        }
+
+        .footer-nav a:hover {
+            color: var(--signal);
         }
 
         footer {
@@ -1384,7 +1439,7 @@
             {% else %}
             <div class="hero-name"><a href="/">{{ site.author.name }}</a></div>
             {% endif %}
-            <span class="hero-role">Data Science Architect, NLP</span>
+            <span class="hero-role">{{ site.author.role }}</span>
             <p class="hero-bio">
                 Building production LLM and NLP systems: retrieval, semantic search, embeddings, and agents that run at scale, not in a notebook.
             </p>
@@ -1417,6 +1472,12 @@
     {% unless page.layout == 'post' %}
     <footer>
         <div class="container">
+            <nav class="footer-nav" aria-label="Site">
+                <a href="/">Home</a>
+                <a href="/blog/">Technical Writing</a>
+                <a href="/resume/sachin_kalsi.pdf">Resume (PDF)</a>
+                <a href="/feed.xml">RSS</a>
+            </nav>
             <p>&copy; {{ 'now' | date: "%Y" }} {{ site.author.name }}. All rights reserved.</p>
         </div>
     </footer>

@@ -4,7 +4,7 @@ description: "Specializing in Large Language Models, Semantic Search, and Genera
 url: "https://sachinkalsi.github.io" # Your site URL
 baseurl: "" # Subpath of your site
 timezone: Asia/Kolkata
-lang: en_US
+lang: en-US
 keywords:
   - Sachin Kalsi
   - Data Science Architect
@@ -15,6 +15,12 @@ keywords:
   - Semantic Search
   - Machine Learning
 
+# Default social preview image (used when a page declares no `image:` of its own)
+og_image: "/assets/images/og-default.png"
+og_image_width: 1200
+og_image_height: 630
+og_image_alt: "Sachin Kalsi — Data Science Architect, NLP"
+
 # Google Analytics (GA4)
 # Get your Measurement ID from: https://analytics.google.com/
 # Format: G-XXXXXXXXXX
@@ -23,7 +29,10 @@ google_analytics: "G-SPBSTYD46G" # Google Analytics Measurement ID
 # Author Information
 author:
   name: "Sachin Kalsi"
+  # Single source of truth for the role shown in the hero and in Person JSON-LD.
+  role: "Data Science Architect, NLP"
   email: "sachinkalsi15@gmail.com"
+  location: "Bengaluru, India"
   linkedin: "https://www.linkedin.com/in/sachinkalsi/"
   github: "https://github.com/sachinkalsi"
   medium: "https://medium.com/@sachinkalsi"
@@ -40,12 +49,9 @@ sass:
 plugins:
   - jekyll-feed
   - jekyll-sitemap
-  - jekyll-paginate
 
 # Blog Settings
 permalink: /blog/:title/
-paginate: 5
-paginate_path: "/blog/page:num/"
 
 # Default SEO values
 defaults:
@@ -67,9 +73,14 @@ include:
 
 # Exclude files from processing
 exclude:
+  - .DS_Store
   - README.md
   - BLOG_POST_TEMPLATE.md
   - GOOGLE_ANALYTICS_SETUP.md
+  - DESIGN.md
+  - PRODUCT.md
+  - .impeccable
+  - .github
   - assets/images/README.md
   - blog-simple.html
   - blog-static.html

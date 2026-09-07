@@ -144,44 +144,30 @@ If Google reports `Crawled - currently not indexed`, wait a few days and improve
 
 ## Handling Old Blog URLs
 
-If an old URL exists in Google Search Console or has backlinks, do not leave it as a 404 if it has value.
+GitHub Pages cannot issue real 301 redirects, and `jekyll-redirect-from` is not installed. That
+constrains the options, so pick deliberately.
 
-Best option:
+**Preferred: migrate the article.** Recreate it as a real `_posts/...md` post. This is the only
+approach that actually preserves the old URL's value, because Google transfers signal to an
+equivalent page — not to a listing.
 
-- Migrate the old article into a new `_posts/...md` post.
-- Add a small legacy redirect page at the old path.
-- Point the old URL to the closest matching new post.
+**Otherwise: let the old URL 404.** A clean 404 tells Google to drop the URL, which is the correct
+outcome for content you no longer want associated with you. This is what was done for the 2016-2018
+articles that used to live at `/blog/category/...` — the redirect stubs were deleted deliberately.
 
-Acceptable option:
+**Do not redirect an old article to `/blog/`.** Google treats a redirect to a non-equivalent page as
+a soft 404: the URL gets dropped anyway, and no signal is transferred. It only adds a thin page.
 
-- If the old article is not worth migrating, redirect the old URL to `/blog/`.
-- Mark the legacy page `noindex, follow`.
-- Keep it out of the sitemap with `sitemap: false`.
+If you ever do add a legacy stub, three traps to avoid — all three were live on this site:
 
-Example legacy redirect page:
-
-```html
----
-layout: null
-permalink: /old/blog/url.html
-robots: "noindex, follow"
-sitemap: false
----
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=/blog/">
-    <meta name="robots" content="noindex, follow">
-    <link rel="canonical" href="https://sachinkalsi.github.io/blog/">
-    <title>Article moved | Sachin Kalsi</title>
-</head>
-<body>
-    <p>This article moved to <a href="/blog/">the blog</a>.</p>
-</body>
-</html>
-```
+1. **`layout: null` renders no `<meta name="robots">`.** Front matter `robots: "noindex, follow"`
+   only works if a layout emits it. With no layout you must hardcode the tag in the HTML itself,
+   or the stub ships as an indexable page titled "Redirecting...".
+2. **Never `permalink` an HTML file to a `.pdf` path.** GitHub Pages sets `Content-Type` from the
+   extension, so the file is served as `application/pdf` with HTML inside — a corrupt PDF at
+   HTTP 200. A `meta refresh` cannot execute inside a PDF viewer. This is worse than a 404.
+3. **Two files must never declare the same `permalink`.** Jekyll warns and silently drops one.
+   Run `bundle exec jekyll build` and confirm there is no permalink-conflict warning.
 
 ## Lighthouse / PageSpeed Checks
 

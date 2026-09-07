@@ -7,19 +7,20 @@ layout: default
         <i class="fas fa-arrow-left"></i> Return to All Blogs
     </a>
 
-    <article itemscope itemtype="https://schema.org/BlogPosting">
+    {% comment %} Schema for this page is emitted once as JSON-LD at the foot of this layout.
+                  Do not add microdata here — two BlogPosting entities on one page compete. {% endcomment %}
+    <article>
         <div class="blog-post-header">
-            <h1 class="blog-post-title" itemprop="headline">{{ page.title }}</h1>
+            <h1 class="blog-post-title">{{ page.title }}</h1>
             <div class="blog-post-meta">
-                <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
-                    <i class="far fa-calendar"></i> 
+                <time datetime="{{ page.date | date_to_xmlschema }}">
+                    <i class="far fa-calendar"></i>
                     {{ page.date | date: "%B %d, %Y" }}
                 </time>
                 {% if page.author %}
-                <span itemprop="author" itemscope itemtype="https://schema.org/Person">
-                    <meta itemprop="name" content="{{ page.author }}">
-                    <i class="far fa-user"></i> 
-                    <a href="/" class="author-link">{{ page.author }}</a>
+                <span>
+                    <i class="far fa-user"></i>
+                    <a href="/" class="author-link" rel="author">{{ page.author }}</a>
                 </span>
                 {% endif %}
                 {% assign words = content | number_of_words %}
@@ -49,7 +50,7 @@ layout: default
             {% endif %}
         </div>
 
-        <div class="blog-post-content" itemprop="articleBody">
+        <div class="blog-post-content">
             {{ content }}
         </div>
 
@@ -102,18 +103,24 @@ layout: default
         {% capture related_markup %}
             {% for p in site.posts %}
                 {% if p.url != page.url and page.tags and shown_related < 3 %}
-                    {% assign shared_tags = p.tags | intersect: page.tags %}
-                    {% if shared_tags.size > 0 %}
+                    {% assign shared_tag = "" %}
+                    {% for t in p.tags %}
+                        {% if shared_tag == "" and page.tags contains t %}
+                            {% assign shared_tag = t %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if shared_tag != "" %}
                         <a class="related-post-item" href="{{ p.url }}">
                             <span class="related-post-title">{{ p.title }}</span>
-                            <span class="related-post-tag"><i class="fas fa-tag"></i> {{ shared_tags | first }}</span>
+                            <span class="related-post-tag"><i class="fas fa-tag"></i> {{ shared_tag }}</span>
                         </a>
                         {% assign shown_related = shown_related | plus: 1 %}
                     {% endif %}
                 {% endif %}
             {% endfor %}
         {% endcapture %}
-        {% if related_markup | strip != "" %}
+        {% assign related_trimmed = related_markup | strip %}
+        {% if related_trimmed != "" %}
         <div class="related-posts">
             <div class="related-posts-title">Related notes</div>
             <div class="related-posts-list">
@@ -122,53 +129,60 @@ layout: default
         </div>
         {% endif %}
 
-        {% if page.description %}
-        <meta itemprop="description" content="{{ page.description }}">
-        {% elsif page.excerpt %}
-        <meta itemprop="description" content="{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}">
-        {% endif %}
-        {% if page.image %}
-        <meta itemprop="image" content="{{ site.url }}{{ site.baseurl }}{{ page.image }}">
-        {% endif %}
     </article>
 </div>
 
-<!-- Structured Data (JSON-LD) for Google -->
+<!-- Structured Data (JSON-LD) for Google.
+     Person / WebSite / WebPage nodes come from _layouts/default.html; this file
+     references them by @id rather than redeclaring them. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
+  "@graph": [
+  {
   "@type": "BlogPosting",
+  "@id": "{{ page.url | absolute_url }}#article",
   "headline": {{ page.title | jsonify }},
   {% if page.description %}
   "description": {{ page.description | jsonify }},
   {% elsif page.excerpt %}
   "description": {{ page.excerpt | strip_html | strip_newlines | normalize_whitespace | truncate: 160 | jsonify }},
   {% endif %}
-  {% if page.image %}
-  "image": "{{ site.url }}{{ site.baseurl }}{{ page.image }}",
+  {% assign social_image = page.image | default: site.og_image %}
+  {% if social_image %}
+  "image": "{{ social_image | absolute_url }}",
   {% endif %}
   "datePublished": "{{ page.date | date_to_xmlschema }}",
   "dateModified": "{{ page.last_modified_at | default: page.date | date_to_xmlschema }}",
-  "author": {
-    "@type": "Person",
-    "name": {{ page.author | default: site.author.name | jsonify }},
-    "url": "{{ site.author.linkedin }}"
-  },
-  "publisher": {
-    "@type": "Person",
-    "name": {{ site.author.name | jsonify }},
-    "url": "{{ site.url }}{{ site.baseurl }}"
-  },
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "{{ site.url }}{{ site.baseurl }}{{ page.url }}"
-  },
-  "url": "{{ site.url }}{{ site.baseurl }}{{ page.url }}"
+  "author": { "@id": "{{ '/' | absolute_url }}#person" },
+  "publisher": { "@id": "{{ '/' | absolute_url }}#person" },
+  "isPartOf": { "@id": "{{ '/blog/' | absolute_url }}#blog" },
+  "mainEntityOfPage": { "@id": "{{ page.url | absolute_url }}#webpage" },
+  "url": "{{ page.url | absolute_url }}"
   {% if page.tags %}
   ,"keywords": {{ page.tags | join: ', ' | jsonify }}
   {% endif %}
   {% if page.categories %}
   ,"articleSection": {{ page.categories | join: ', ' | jsonify }}
   {% endif %}
+  },
+  {% assign blog_page = site.pages | where: "url", "/blog/" | first %}
+  {
+    "@type": "Blog",
+    "@id": "{{ '/blog/' | absolute_url }}#blog",
+    "url": "{{ '/blog/' | absolute_url }}",
+    "name": {{ blog_page.title | default: "Writing" | jsonify }},
+    "publisher": { "@id": "{{ '/' | absolute_url }}#person" }
+  },
+  {
+    "@type": "BreadcrumbList",
+    "@id": "{{ page.url | absolute_url }}#breadcrumb",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "{{ '/' | absolute_url }}" },
+      { "@type": "ListItem", "position": 2, "name": "Writing", "item": "{{ '/blog/' | absolute_url }}" },
+      { "@type": "ListItem", "position": 3, "name": {{ page.title | jsonify }} }
+    ]
+  }
+  ]
 }
 </script>

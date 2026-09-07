@@ -1,6 +1,6 @@
 ---
 layout: default
-description: "Portfolio of Sachin Kalsi, Data Science Architect specializing in large language models (LLMs), NLP systems, PyTorch, semantic search, vector embeddings, and machine learning tutorials."
+description: "Sachin Kalsi, Data Science Architect, on production LLM and NLP systems: semantic search, vector embeddings, retrieval, and attention internals."
 keywords:
   - Sachin Kalsi
   - Data Science Architect
@@ -23,81 +23,25 @@ keywords:
                 <h2>YouTube Videos</h2>
             </div>
             <div class="grid" id="videos-grid">
-                <!-- Cards will be injected here by JavaScript -->
+                {% for item in site.data.videos %}
+                <article class="card">
+                    <a href="{{ item.link }}" target="_blank" rel="noopener noreferrer">
+                        <div class="card-img-wrapper">
+                            <img src="{{ item.thumbnail }}" alt="{{ item.title | escape }}" loading="lazy" width="480" height="360">
+                        </div>
+                        <div class="card-body">
+                            <span class="card-source"><i class="{{ item.icon }}"></i> YouTube Video</span>
+                            <h3 class="card-title">{{ item.title }}</h3>
+                            <p class="card-desc">{{ item.description }}</p>
+                            <div class="card-footer">
+                                <span><i class="far fa-calendar"></i> {{ item.uploadDate | date: "%B %Y" }}</span>
+                                <span class="read-more">Watch Now &rarr;</span>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+                {% endfor %}
             </div>
-
-            <script>
-
-                function renderVideos(videos) {
-                    const grid = document.getElementById('videos-grid');
-                    grid.innerHTML = '';
-                    videos.forEach(item => {
-                        const article = document.createElement('article');
-                        article.className = 'card';
-                        article.innerHTML = `
-                            <a href="${item.link}" target="_blank" rel="noopener noreferrer">
-                                <div class="card-img-wrapper">
-                                    <img src="${item.thumbnail}" alt="${item.title}">
-                                </div>
-                                <div class="card-body">
-                                    <span class="card-source"><i class="${item.icon}"></i> YouTube Video</span>
-                                    <h3 class="card-title">${item.title}</h3>
-                                    <p class="card-desc">${item.description || ''}</p>
-                                    <div class="card-footer">
-                                        <span><i class="far fa-play-circle"></i> Video Tutorial</span>
-                                        <span class="read-more">Watch Now &rarr;</span>
-                                    </div>
-                                </div>
-                            </a>`;
-                        grid.appendChild(article);
-                    });
-                }
-
-                function injectVideoSchema(videos) {
-                    const schemaData = {
-                        "@context": "https://schema.org",
-                        "@graph": videos.map(video => {
-                            let videoId = '';
-                            const match = video.link.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^#\&\?]+)/);
-                            if (match) videoId = match[1];
-                            
-                            return {
-                                "@type": "VideoObject",
-                                "name": video.title,
-                                "description": video.description || `Tutorial video on ${video.title} by Sachin Kalsi.`,
-                                "thumbnailUrl": [video.thumbnail],
-                                "uploadDate": video.uploadDate || "2024-01-01T00:00:00Z",
-                                "embedUrl": videoId ? `https://www.youtube.com/embed/${videoId}` : video.link,
-                                "contentUrl": video.link,
-                                "interactionStatistic": {
-                                    "@type": "InteractionCounter",
-                                    "interactionType": { "@type": "WatchAction" }
-                                }
-                            };
-                        })
-                    };
-
-                    const script = document.createElement('script');
-                    script.type = 'application/ld+json';
-                    script.text = JSON.stringify(schemaData);
-                    document.head.appendChild(script);
-                }
-
-                // Load from videos.json, use fallback if it fails
-                fetch('videos.json')
-                    .then(response => {
-                        if (!response.ok) throw new Error('Could not load videos.json');
-                        return response.json();
-                    })
-                    .then(data => {
-                        renderVideos(data);
-                        injectVideoSchema(data);
-                        console.log('✓ Loaded videos and injected schema from videos.json');
-                    })
-                    .catch(error => {
-                        console.log('error loading videos.json', error);
-                    });
-            </script>
 
         </section>
         <div class="more-container">
@@ -157,3 +101,24 @@ keywords:
 
 
 </main>
+
+{% comment %} Server-rendered VideoObject graph for the YouTube section above. {% endcomment %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+{%- for item in site.data.videos %}
+    {
+      "@type": "VideoObject",
+      "name": {{ item.title | jsonify }},
+      "description": {{ item.description | jsonify }},
+      "thumbnailUrl": [{{ item.thumbnail | jsonify }}],
+      "uploadDate": {{ item.uploadDate | jsonify }},
+      "embedUrl": {{ item.videoId | prepend: "https://www.youtube.com/embed/" | jsonify }},
+      "contentUrl": {{ item.link | jsonify }},
+      "author": { "@id": "{{ site.url }}{{ site.baseurl }}/#person" }
+    }{% unless forloop.last %},{% endunless %}
+{%- endfor %}
+  ]
+}
+</script>
