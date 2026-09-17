@@ -32,6 +32,14 @@ Digging into the real reason took me through anisotropy in transformer embedding
 
 The reason is that the loss function used to train these models only looks at the gap between scores, never at the scores themselves. It stops training once the gap is big enough, and at a temperature of 0.01 that works out to roughly 0.15. Everything above that gets left alone.
 
+<nav class="post-toc" aria-label="Table of contents" markdown="1">
+<p class="post-toc-title">Contents</p>
+
+* placeholder
+{:toc}
+
+</nav>
+
 ## What you will learn
 
 1. What embedding models are actually optimised for, and why that matters
@@ -74,6 +82,10 @@ E5 collected 1.3 billion pairs this way and filtered them down to 270 million.
 **3. Supervised fine-tuning (1 to 2M pairs).** Human labels, LLM generated and validated data, clean public datasets like SQuAD and Natural Questions, plus domain data. Aggressive cleaning and filtering. InfoNCE again, or InfoNCE combined with KL divergence to distil from a cross-encoder, with a much smaller batch size, for 1 to 3 epochs. This is the stage where good hard negatives get mined.
 
 **4. Whatever your end goal needs.** Instruction support, Matryoshka embeddings, quantisation, and so on.
+
+![Four stacked stages: a pretrained BERT base, then weak contrastive training on 100M to 1B lightly cleaned pairs with InfoNCE at temperature 0.01 and batch size 32,768 using in-batch negatives only, then supervised fine-tuning on 1M to 2M heavily cleaned pairs with 7 mined hard negatives each, then optional task-specific work. Stage 1 is marked as the stage that sets your score range](/assets/images/posts/why-embedding-cosine-similarity-scores-are-high/embedding-model-training-pipeline.svg)
+
+*The numbers are from the E5 paper; stage 1 is where the score range is set.*
 
 Synthetic data from LLMs is what makes good hard negatives possible at scale, and hard negatives are what separate a decent embedding model from a good one.
 

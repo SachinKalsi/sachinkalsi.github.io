@@ -1195,6 +1195,61 @@
             border-bottom-color: var(--primary);
         }
 
+        /* Table of contents. kramdown builds the list from the headings via {:toc};
+           the wrapper needs markdown="1" or the list never renders. */
+        .post-toc {
+            margin: 34px 0 40px;
+            padding: 20px 24px;
+            background: var(--paper);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--signal);
+            border-radius: var(--radius-lg);
+        }
+
+        .post-toc-title {
+            margin: 0 0 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--ink-faint);
+        }
+
+        .post-toc ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        .post-toc > ul {
+            columns: 2;
+            column-gap: 34px;
+        }
+
+        .post-toc ul ul {
+            columns: 1;
+            margin: 4px 0 4px;
+        }
+
+        .post-toc li {
+            margin: 5px 0;
+            font-size: 0.93rem;
+            break-inside: avoid;
+        }
+
+        .post-toc a {
+            color: var(--ink-soft);
+            font-weight: 400;
+            border-bottom: none;
+        }
+
+        .post-toc a:hover {
+            color: var(--signal);
+        }
+
+        @media (max-width: 600px) {
+            .post-toc > ul { columns: 1; }
+        }
+
         .blog-post-content hr {
             border: none;
             border-top: 2px solid var(--border);
