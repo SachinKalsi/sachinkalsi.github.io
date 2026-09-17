@@ -1100,12 +1100,19 @@
             text-align: left;
         }
 
+        /* Most post images are screenshots on a white ground. On a white content
+           column a hairline border leaves them indistinguishable from body copy,
+           so mat them on --paper to read as quoted artefacts. */
         .blog-post-content img {
+            display: block;
             max-width: 100%;
             height: auto;
+            margin: 35px auto;
+            padding: 14px;
+            background: var(--paper);
+            border: 1px solid var(--border-strong);
             border-radius: var(--radius-lg);
-            margin: 35px 0;
-            border: 1px solid var(--border);
+            box-sizing: border-box;
         }
 
         .blog-post-content code {
@@ -1197,10 +1204,13 @@
         /* Display math cannot wrap, so let anything too wide scroll in its own box
            rather than forcing the page to scroll sideways on mobile. */
         .blog-post-content mjx-container[display="true"] {
+            display: block;
+            text-align: center;   /* keep MathJax's centring explicit; the scroll box can defeat it */
             overflow-x: auto;
             overflow-y: hidden;
             max-width: 100%;
-            padding: 4px 0;
+            margin: 28px 0;
+            padding: 6px 0;
         }
 
         .blog-post-content table {

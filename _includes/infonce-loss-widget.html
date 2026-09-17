@@ -1,0 +1,160 @@
+<div class="nce-widget">
+<style>
+.nce-widget{--nce-ink:#1A1815;--nce-soft:#6B655C;--nce-line:#DDD8CE;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+ border:1px solid var(--nce-line);background:#fff;padding:16px;margin:24px 0;
+ color:var(--nce-ink);font-size:15px;line-height:1.5;max-width:100%}
+.nce-widget *{box-sizing:border-box}
+.nce-widget .nce-hd{font-weight:600;font-size:15px;margin:0 0 2px}
+.nce-widget .nce-sub{color:var(--nce-soft);font-size:13px;margin:0 0 14px;
+ font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.nce-widget .nce-ctl{display:flex;align-items:center;gap:10px;margin:8px 0}
+.nce-widget .nce-ctl label{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+ font-size:12px;color:var(--nce-soft);min-width:130px}
+.nce-widget input[type=range]{-webkit-appearance:none;appearance:none;flex:1;min-width:90px;
+ height:2px;background:var(--nce-line);outline:none;margin:0;padding:0}
+.nce-widget input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;
+ border-radius:50%;background:var(--nce-ink);cursor:pointer;border:3px solid #fff;box-shadow:0 0 0 1px var(--nce-ink)}
+.nce-widget input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;
+ background:var(--nce-ink);cursor:pointer;border:3px solid #fff;box-shadow:0 0 0 1px var(--nce-ink)}
+.nce-widget .nce-val{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600;
+ font-size:13px;min-width:76px;text-align:right}
+.nce-widget .nce-tabs{display:flex;gap:6px;margin:12px 0 8px}
+.nce-widget .nce-tabs button{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;
+ padding:5px 11px;border:1px solid var(--nce-line);background:#fff;cursor:pointer;color:var(--nce-soft);border-radius:0}
+.nce-widget .nce-tabs button.nce-on{background:var(--nce-ink);color:#fff;border-color:var(--nce-ink)}
+.nce-widget svg{width:100%;height:auto;display:block;aspect-ratio:700/340}
+.nce-widget .nce-leg{display:flex;gap:14px;flex-wrap:wrap;
+ font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;margin-top:8px;color:var(--nce-soft)}
+.nce-widget .nce-leg span{display:flex;align-items:center;gap:5px}
+.nce-widget .nce-sw{width:14px;height:3px;display:inline-block}
+.nce-widget .nce-out{display:flex;gap:20px;flex-wrap:wrap;margin-top:12px;
+ padding-top:10px;border-top:1px solid var(--nce-line)}
+.nce-widget .nce-d{display:flex;flex-direction:column;gap:2px}
+.nce-widget .nce-k{font-size:10px;letter-spacing:.06em;color:var(--nce-soft);text-transform:uppercase}
+.nce-widget .nce-v{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:19px;font-weight:600;line-height:1}
+.nce-widget .nce-note{background:#F2F4F3;border-left:3px solid #8FA9B2;padding:9px 12px;
+ font-size:13px;margin-top:12px}
+.nce-widget .nce-note.nce-bad{background:#F7F1EC;border-color:#B08968}
+.nce-widget .nce-take{margin:18px 0 0;padding:14px 0 0;border-top:1px solid var(--nce-line)}
+.nce-widget .nce-take p{margin:0 0 7px;font-size:14px}
+.nce-widget .nce-take p:last-child{margin-bottom:0}
+.nce-widget .nce-take b{font-weight:600}
+.nce-widget table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0 4px}
+.nce-widget th,.nce-widget td{text-align:left;padding:5px 7px;border-bottom:1px solid var(--nce-line)}
+.nce-widget th{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--nce-soft);
+ border-bottom:1.5px solid var(--nce-ink);font-weight:600}
+.nce-widget td.nce-n,.nce-widget th.nce-n{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;text-align:right}
+.nce-widget .nce-cap{font-size:12px;color:var(--nce-soft);margin:4px 0 0}
+.nce-widget .nce-sec{font-weight:600;font-size:14px;margin:20px 0 8px;
+ padding-top:14px;border-top:1px solid var(--nce-line)}
+.nce-widget .nce-cmt{margin:0 0 14px}
+.nce-widget .nce-cmt h4{font-size:13px;font-weight:600;margin:0 0 4px;
+ font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#123F5A}
+.nce-widget .nce-cmt p{margin:0 0 5px;font-size:14px}
+.nce-widget .nce-cmt p:last-child{margin:0}
+.nce-widget .nce-concl{margin-top:18px;padding:14px 16px;background:#F2F4F3;
+ border-left:3px solid #123F5A}
+.nce-widget .nce-concl p{margin:0 0 7px;font-size:14px}
+.nce-widget .nce-concl p:last-child{margin:0}
+.nce-widget .nce-concl .nce-hdr{font-weight:600;font-size:13px;
+ font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#123F5A;margin-bottom:8px}
+@media(max-width:520px){.nce-widget .nce-ctl label{min-width:100%}.nce-widget .nce-ctl{flex-wrap:wrap}}
+</style>
+
+<p class="nce-hd">How the InfoNCE loss behaves</p>
+<p class="nce-sub">L(&#916;) = log(1 + N&#183;e<sup>&#8722;&#916;/&#964;</sup>)</p>
+
+<div class="nce-ctl"><label for="nceN">wrong answers N</label><input type="range" id="nceN" min="3" max="18" value="15" step="1"><span class="nce-val" id="nceNv">32768</span></div>
+<div class="nce-ctl"><label for="nceD">margin &#916; achieved</label><input type="range" id="nceD" min="0" max="120" value="15" step="1"><span class="nce-val" id="nceDv">0.150</span></div>
+
+<div class="nce-tabs">
+<button type="button" id="nceBL" class="nce-on">loss</button>
+<button type="button" id="nceBG">gradient</button>
+</div>
+
+<svg id="ncePlot" viewBox="0 0 700 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Loss versus margin, one curve per temperature"></svg>
+<div class="nce-leg" id="nceLeg"></div>
+
+<div class="nce-out">
+<div class="nce-d"><span class="nce-k">&#964; = 0.01</span><span class="nce-v" style="color:#123F5A" id="nceR0">&#8211;</span></div>
+<div class="nce-d"><span class="nce-k">&#964; = 0.02</span><span class="nce-v" style="color:#37718B" id="nceR1">&#8211;</span></div>
+<div class="nce-d"><span class="nce-k">&#964; = 0.05</span><span class="nce-v" style="color:#6BA0AF" id="nceR2">&#8211;</span></div>
+<div class="nce-d"><span class="nce-k">&#964; = 0.10</span><span class="nce-v" style="color:#8FA9B2" id="nceR3">&#8211;</span></div>
+</div>
+<div class="nce-note" id="nceVerdict"></div>
+
+<div class="nce-take">
+<p><b>Leave &#916; at 0.15.</b> At &#964;=0.01 the loss is already near zero, so training is done. At &#964;=0.05 the loss is still high, so training is not done. The same gap is enough for one and not for the other.</p>
+<p><b>Drag &#916; from 0 to 0.3.</b> The &#964;=0.01 line drops very fast. The higher &#964; lines stay high.</p>
+<p><b>Switch to the gradient tab.</b> After the drop there is no force left, so the model stops changing.</p>
+<p><b>Drag N across its whole range.</b> The lines move right only a little.</p>
+</div>
+
+<p class="nce-sec">Gap needed to reach a given loss</p>
+<p style="font-size:13px;margin:0 0 6px;font-family:ui-monospace,monospace;color:#6B655C">&#916; = &#964; &#215; ln(N / L)</p>
+<table id="nceTbl"></table>
+<p class="nce-cap">Grey cells ask for a gap bigger than 1.0, which cosine cannot give. The table updates with your N.</p>
+
+
+
+<script>
+(function(){
+"use strict";
+var T=[{t:0.01,c:'#123F5A'},{t:0.02,c:'#37718B'},{t:0.05,c:'#6BA0AF'},{t:0.10,c:'#A6C6CF'}];
+var X0=62,X1=678,Y0=26,Y1=286,DMAX=1.2,LO=-9,HI=1.3,mode='loss';
+var N=document.getElementById('nceN'),D=document.getElementById('nceD');
+var Nv=document.getElementById('nceNv'),Dv=document.getElementById('nceDv');
+var plot=document.getElementById('ncePlot'),leg=document.getElementById('nceLeg'),vd=document.getElementById('nceVerdict');
+function loss(d,t,n){return Math.log(1+n*Math.exp(-d/t));}
+function grad(d,t,n){var x=n*Math.exp(-d/t);return (x/(1+x))/t;}
+function px(d){return X0+(d/DMAX)*(X1-X0);}
+function py(v){var L=Math.log10(Math.max(v,1e-12));L=Math.max(LO,Math.min(HI,L));return Y1-((L-LO)/(HI-LO))*(Y1-Y0);}
+function draw(){
+ var n=Math.pow(2,+N.value),d=(+D.value)/100,f=(mode==='loss'?loss:grad),s='',i,e,g;
+ Nv.textContent=n.toLocaleString();Dv.textContent=d.toFixed(3);
+ s+='<rect x="'+px(1)+'" y="'+Y0+'" width="'+(X1-px(1))+'" height="'+(Y1-Y0)+'" fill="#8A8378" opacity=".08"/>';
+ s+='<text x="'+(px(1)+8)+'" y="'+(Y0+16)+'" font-family="ui-monospace,monospace" font-size="10" fill="#8A8378">unreachable</text>';
+ for(e=Math.ceil(LO);e<=Math.floor(HI);e++){var y=py(Math.pow(10,e));
+  s+='<line x1="'+X0+'" y1="'+y+'" x2="'+X1+'" y2="'+y+'" stroke="#EDEAE3"/>';
+  s+='<text x="'+(X0-7)+'" y="'+(y+3.5)+'" text-anchor="end" font-family="ui-monospace,monospace" font-size="9.5" fill="#9C968C">1e'+e+'</text>';}
+ for(g=0;g<=1.2001;g+=0.2){var x=px(g);
+  s+='<line x1="'+x+'" y1="'+Y1+'" x2="'+x+'" y2="'+(Y1+5)+'" stroke="#6B655C"/>';
+  s+='<text x="'+x+'" y="'+(Y1+19)+'" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9.5" fill="#6B655C">'+g.toFixed(1)+'</text>';}
+ s+='<line x1="'+X0+'" y1="'+Y1+'" x2="'+X1+'" y2="'+Y1+'" stroke="#1A1815"/>';
+ s+='<text x="'+((X0+X1)/2)+'" y="'+(Y1+38)+'" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="#6B655C">gap between the right answer and the wrong ones</text>';
+ s+='<text x="14" y="'+((Y0+Y1)/2)+'" transform="rotate(-90 14 '+((Y0+Y1)/2)+')" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="#6B655C">'+(mode==='loss'?'loss (log scale)':'gradient size (log scale)')+'</text>';
+ T.forEach(function(o){var p=[];for(i=0;i<=300;i++){var dd=DMAX*i/300;p.push(px(dd).toFixed(1)+','+py(f(dd,o.t,n)).toFixed(1));}
+  s+='<polyline points="'+p.join(' ')+'" fill="none" stroke="'+o.c+'" stroke-width="2.2"/>';});
+ s+='<line x1="'+px(d)+'" y1="'+Y0+'" x2="'+px(d)+'" y2="'+Y1+'" stroke="#5A544B" stroke-width="1.2" stroke-dasharray="4 4"/>';
+ T.forEach(function(o){s+='<circle cx="'+px(d)+'" cy="'+py(f(d,o.t,n))+'" r="4.5" fill="'+o.c+'" stroke="#fff" stroke-width="1.5"/>';});
+ plot.innerHTML=s;
+ leg.innerHTML=T.map(function(o){return '<span><i class="nce-sw" style="background:'+o.c+'"></i>&#964; = '+o.t.toFixed(2)+'</span>';}).join('')+'<span><i class="nce-sw" style="background:#5A544B"></i>your &#916;</span>';
+ T.forEach(function(o,k){var v=f(d,o.t,n);
+  document.getElementById('nceR'+k).textContent=(v<1e-4?v.toExponential(1):v.toFixed(v<1?4:2));});
+ var a=loss(d,0.01,n),b=loss(d,0.05,n);
+ if(a<0.05&&b>1){vd.className='nce-note';
+  vd.innerHTML='At &#916; = '+d.toFixed(3)+' the &#964;=0.01 model is <b>done</b> (loss '+a.toExponential(1)+') but the &#964;=0.05 model is <b>still far from done</b> (loss '+b.toFixed(2)+'). The same gap is enough for one and not for the other.';}
+ else if(a<0.05&&b<0.05){vd.className='nce-note';
+  vd.innerHTML='Every temperature is satisfied here. This gap is larger than any of them asked for, and a real model would have stopped well before reaching it.';}
+ else{vd.className='nce-note nce-bad';
+  vd.innerHTML='At &#916; = '+d.toFixed(3)+' no temperature is finished yet. Training is still pushing at every setting.';}
+
+ var EPS=[0.69,0.1,0.01,0.001],h='<thead><tr><th>&#964;</th>';
+ EPS.forEach(function(e){h+='<th class="nce-n">L = '+e+'</th>';});
+ h+='</tr></thead><tbody>';
+ [0.005,0.01,0.02,0.05,0.10,0.20].forEach(function(t){
+  h+='<tr><td class="nce-n">'+t.toFixed(3)+'</td>';
+  EPS.forEach(function(e){var nd=t*Math.log(n/e);
+   h+= nd>1.0 ? '<td class="nce-n" style="color:#A9A399">'+nd.toFixed(2)+'</td>'
+              : '<td class="nce-n">'+nd.toFixed(3)+'</td>';});
+  h+='</tr>';});
+ document.getElementById('nceTbl').innerHTML=h+'</tbody>';
+}
+N.addEventListener('input',draw);D.addEventListener('input',draw);
+document.getElementById('nceBL').addEventListener('click',function(){mode='loss';this.className='nce-on';document.getElementById('nceBG').className='';draw();});
+document.getElementById('nceBG').addEventListener('click',function(){mode='grad';this.className='nce-on';document.getElementById('nceBL').className='';draw();});
+draw();
+})();
+</script>
+</div>
